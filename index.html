@@ -12,31 +12,6 @@
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/tr.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyDGYVKpi4wfz77CN0Isx6TsHQhJ3prpOI",
-      authDomain: "restoran-site-bdc62.firebaseapp.com",
-      projectId: "restoran-site-bdc62",
-      storageBucket: "restoran-site-bdc62.firebasestorage.app",
-      messagingSenderId: "753753557524",
-      appId: "1:753753557524:web:9381dbb506daac22a6f501",
-      measurementId: "G-XRHJFM6CF0"
-    };
-
-    const firebaseApp = initializeApp(firebaseConfig);
-    const firebaseDb = getFirestore(firebaseApp);
-    const siteDataDocRef = doc(firebaseDb, "siteData", "main");
-
-    window.firebaseDb = firebaseDb;
-    window.siteDataDocRef = siteDataDocRef;
-    window.firebaseGetDoc = getDoc;
-    window.firebaseSetDoc = setDoc;
-    window.firebaseOnSnapshot = onSnapshot;
-    window.dispatchEvent(new Event('firebase-ready'));
-  </script>
   <script type="text/javascript">
     (function () {
       emailjs.init({
@@ -1304,7 +1279,6 @@
   ];
 
   const siteStorageKey = 'lucht_site_data';
-  let isRemoteSyncInProgress = false;
 
   function getStoredAppData() {
     try {
@@ -1328,97 +1302,10 @@
     return safe;
   }
 
-  let appData = normalizeAppData(null);
+  let appData = normalizeAppData(getStoredAppData());
 
   function saveAppData() {
     localStorage.setItem(siteStorageKey, JSON.stringify(appData));
-  }
-
-  async function saveAppDataToFirestore() {
-    const siteRef = window.siteDataDocRef;
-    if (!siteRef) {
-      console.warn('Firebase Firestore başlatılmadı. siteDataDocRef bulunamadı.');
-      return false;
-    }
-
-    isRemoteSyncInProgress = true;
-    try {
-      await window.firebaseSetDoc(siteRef, {
-        ...appData,
-        updatedAt: new Date().toISOString()
-      }, { merge: true });
-      console.log('Firestore yazma başarılı:', appData.menuItems.length, 'menü öğesi');
-      return true;
-    } catch (error) {
-      console.error('Firestore veri yazma hatası:', error);
-      return false;
-    } finally {
-      isRemoteSyncInProgress = false;
-    }
-  }
-
-  async function loadRemoteAppData() {
-    const siteRef = window.siteDataDocRef;
-    if (!siteRef) return;
-
-    try {
-      const snapshot = await window.firebaseGetDoc(siteRef);
-
-      if (!snapshot.exists()) {
-        const localData = normalizeAppData(getStoredAppData());
-        appData = localData;
-        await saveAppDataToFirestore();
-        saveAppData();
-        renderPageData();
-        renderMenu();
-        renderAdminPanel();
-        return;
-      }
-
-      const remoteData = snapshot.data();
-      appData = normalizeAppData(remoteData);
-      saveAppData();
-      renderPageData();
-      renderMenu();
-      renderAdminPanel();
-    } catch (error) {
-      console.error('Firestore veri yükleme hatası:', error);
-      appData = normalizeAppData(getStoredAppData());
-      renderPageData();
-      renderMenu();
-      renderAdminPanel();
-    }
-  }
-
-  function subscribeToFirestoreData() {
-    const siteRef = window.siteDataDocRef;
-    if (!siteRef) {
-      console.warn('Firestore listener başlatılamadı: siteRef yok.');
-      return;
-    }
-
-    window.firebaseOnSnapshot(siteRef, (snapshot) => {
-      if (!snapshot.exists()) {
-        console.log('Firestore dokümanı yok; ilk kez oluşturuluyor.');
-        saveAppDataToFirestore();
-        return;
-      }
-
-      const remoteData = snapshot.data();
-      const nextData = normalizeAppData(remoteData);
-
-      if (JSON.stringify(nextData) === JSON.stringify(appData)) return;
-      if (isRemoteSyncInProgress) return;
-
-      appData = nextData;
-      saveAppData();
-      renderPageData();
-      renderMenu();
-      renderAdminPanel();
-      console.log('Firestore anlık güncelleme alındı.');
-    }, (error) => {
-      console.error('Firestore real-time listener hatası:', error);
-    });
   }
 
   function renderPageData() {
@@ -1964,7 +1851,7 @@
     return { settings, menuItemsFromForm };
   }
 
-  async function applyMenuChanges() {
+  function applyMenuChanges() {
     const passwordField = document.getElementById('adminPasswordInput');
     if (passwordField && passwordField.value.trim()) {
       adminPassword = passwordField.value.trim();
@@ -2037,7 +1924,6 @@
     }));
 
     saveAppData();
-    await saveAppDataToFirestore();
     renderPageData();
     renderMenu();
     closeAdminPanel();
@@ -2055,7 +1941,7 @@
     renderAdminPanel();
   }
 
-  async function resetData() {
+  function resetData() {
     appData = {
       site: JSON.parse(JSON.stringify(defaultSiteData.site)),
       about: JSON.parse(JSON.stringify(defaultSiteData.about)),
@@ -2064,7 +1950,6 @@
       menuItems: JSON.parse(JSON.stringify(defaultMenuItems))
     };
     saveAppData();
-    await saveAppDataToFirestore();
     renderPageData();
     renderMenu();
     renderAdminPanel();
@@ -2109,16 +1994,6 @@
   document.getElementById('importDataInput').addEventListener('change', importAppDataFromJson);
 
   ensureAdminPassword();
-  function startRemoteDataSync() {
-    loadRemoteAppData();
-    subscribeToFirestoreData();
-  }
-
-  if (window.siteDataDocRef) {
-    startRemoteDataSync();
-  } else {
-    window.addEventListener('firebase-ready', startRemoteDataSync, { once: true });
-  }
   renderPageData();
   renderMenu();
   renderAdminPanel();
