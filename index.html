@@ -1,0 +1,2274 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+  <title>Lucht Gastronomy — Lezzetin Modern Yüzü</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/tr.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDGYVKpi4wfz77CN0Isx6TsHQhJ3prpOI",
+      authDomain: "restoran-site-bdc62.firebaseapp.com",
+      projectId: "restoran-site-bdc62",
+      storageBucket: "restoran-site-bdc62.firebasestorage.app",
+      messagingSenderId: "753753557524",
+      appId: "1:753753557524:web:9381dbb506daac22a6f501",
+      measurementId: "G-XRHJFM6CF0"
+    };
+
+    const firebaseApp = initializeApp(firebaseConfig);
+    const firebaseDb = getFirestore(firebaseApp);
+    const siteDataDocRef = doc(firebaseDb, "siteData", "main");
+
+    window.firebaseDb = firebaseDb;
+    window.siteDataDocRef = siteDataDocRef;
+    window.firebaseGetDoc = getDoc;
+    window.firebaseSetDoc = setDoc;
+    window.firebaseOnSnapshot = onSnapshot;
+    window.dispatchEvent(new Event('firebase-ready'));
+  </script>
+  <script type="text/javascript">
+    (function () {
+      emailjs.init({
+        publicKey: "wz0GyEUEAkKWi8f2s"
+      });
+    })();
+  </script>
+  <style>
+    :root {
+      --gold: #d4af37;
+      --gold-light: #e8c85a;
+      --gold-dim: rgba(212, 175, 55, 0.15);
+      --anthracite: #1a1a1a;
+      --anthracite-mid: #202020;
+      --anthracite-light: #2a2a2a;
+      --cream: #f8f4ed;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--anthracite);
+      color: #e8e0d0;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--anthracite); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+    .font-display { font-family: 'Playfair Display', serif; }
+    .text-gold { color: var(--gold); }
+
+    .gold-line {
+      display: inline-block;
+      width: 60px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1.8rem 3rem;
+      display: flex; justify-content: space-between; align-items: center;
+      transition: background 0.4s, padding 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(20,20,20,0.96);
+      backdrop-filter: blur(14px);
+      padding: 1.1rem 3rem;
+      border-bottom: 1px solid rgba(212,175,55,0.1);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.45rem; letter-spacing: 0.08em; color: var(--gold);
+    }
+    .nav-logo span {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-weight: 300; color: #888; font-size: 0.82rem;
+      display: block; letter-spacing: 0.35em; text-transform: uppercase; margin-top: -3px;
+    }
+    .nav-links a {
+      font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: #888; text-decoration: none; margin-left: 2.5rem; transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative; height: 100vh; min-height: 700px;
+      display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(8,8,8,0.55) 0%, rgba(8,8,8,0.25) 50%, rgba(8,8,8,0.75) 100%),
+        url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1800&q=80') center/cover no-repeat;
+      transform: scale(1.06);
+      animation: heroZoom 12s ease-out forwards;
+    }
+    @keyframes heroZoom {
+      from { transform: scale(1.06); }
+      to   { transform: scale(1.0);  }
+    }
+    .hero-grain {
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      opacity: 0.5; pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 2; padding: 2rem; }
+
+    .hero-eyebrow {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 1.05rem; color: var(--gold); letter-spacing: 0.45em; text-transform: uppercase;
+      opacity: 0; animation: fadeUp 0.9s 0.4s ease forwards;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8.5vw, 7.5rem); font-weight: 500; line-height: 1.04; color: #fff;
+      margin: 1rem 0 1.5rem;
+      opacity: 0; animation: fadeUp 1s 0.7s ease forwards;
+    }
+    .hero-title em { font-style: italic; color: var(--gold); }
+    .hero-sub {
+      font-size: 0.78rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: rgba(232,224,208,0.55); margin-bottom: 3rem;
+      opacity: 0; animation: fadeUp 0.9s 1s ease forwards;
+    }
+
+    .btn-primary {
+      display: inline-block; padding: 1rem 3rem;
+      border: 1px solid var(--gold); color: var(--anthracite); background: var(--gold);
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase;
+      text-decoration: none; cursor: pointer; position: relative; overflow: hidden;
+      transition: color 0.35s;
+      opacity: 0; animation: fadeUp 1s 1.2s ease forwards;
+    }
+    .btn-primary::before {
+      content: ''; position: absolute; inset: 0; background: var(--anthracite);
+      transform: translateX(-101%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+    .btn-primary:hover { color: var(--gold); }
+    .btn-primary:hover::before { transform: translateX(0); }
+    .btn-primary span { position: relative; z-index: 1; }
+
+    .btn-outline {
+      display: inline-block; padding: 1rem 2.5rem;
+      border: 1px solid rgba(212,175,55,0.35); color: var(--gold); background: transparent;
+      font-size: 0.68rem; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase;
+      text-decoration: none; cursor: pointer; transition: all 0.3s; margin-left: 1rem;
+      opacity: 0; animation: fadeUp 1s 1.3s ease forwards;
+    }
+    .btn-outline:hover { border-color: var(--gold); background: rgba(212,175,55,0.07); }
+
+    .hero-scroll {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      opacity: 0; animation: fadeUp 1s 1.8s ease forwards;
+    }
+    .hero-scroll span { font-size: 0.58rem; letter-spacing: 0.4em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
+    .scroll-line {
+      width: 1px; height: 52px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 1.8s 2.2s ease infinite;
+    }
+    @keyframes scrollPulse {
+      0%   { opacity: 0; transform: scaleY(0); transform-origin: top; }
+      50%  { opacity: 1; transform: scaleY(1); transform-origin: top; }
+      100% { opacity: 0; transform: scaleY(1); transform-origin: bottom; }
+    }
+
+    /* ─── Section Base ─── */
+    section { padding: 7rem 0; }
+    .section-tag {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 1rem; color: var(--gold); letter-spacing: 0.38em; text-transform: uppercase;
+      display: block; margin-bottom: 0.7rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 500; color: #fff; line-height: 1.15;
+    }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 2rem; }
+
+    /* ─── Scroll Reveal ─── */
+    .reveal { opacity: 0; transform: translateY(38px); transition: opacity 0.85s ease, transform 0.85s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ─── MENU ─── */
+    #menu { background: var(--anthracite-mid); }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+      gap: 1.5rem; margin-top: 3.5rem;
+    }
+    .menu-card {
+      background: var(--anthracite-light);
+      border: 1px solid rgba(212,175,55,0.09);
+      overflow: hidden; cursor: pointer;
+      transition: transform 0.42s cubic-bezier(0.4,0,0.2,1), box-shadow 0.42s, border-color 0.42s;
+    }
+    .menu-card:hover {
+      transform: translateY(-9px) scale(1.012);
+      box-shadow: 0 32px 64px rgba(0,0,0,0.55), 0 0 0 1px rgba(212,175,55,0.3);
+      border-color: rgba(212,175,55,0.3);
+    }
+    .menu-card-img-wrap { overflow: hidden; height: 220px; }
+    .menu-card-img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.65s ease; filter: brightness(0.82) saturate(0.88);
+    }
+    .menu-card:hover .menu-card-img { transform: scale(1.07); filter: brightness(0.95) saturate(1.05); }
+    .menu-card-body { padding: 1.5rem; }
+    .menu-card-category {
+      font-size: 0.58rem; letter-spacing: 0.38em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem;
+    }
+    .menu-card-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #fff; margin-bottom: 0.6rem; }
+    .menu-card-desc { font-size: 0.8rem; color: #777; line-height: 1.75; margin-bottom: 1.25rem; }
+    .menu-card-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem;
+    }
+    .menu-card-price {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.55rem; font-weight: 500; color: var(--gold);
+    }
+    .menu-tag {
+      font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+      padding: 0.28rem 0.7rem; border: 1px solid rgba(212,175,55,0.2); color: #666;
+    }
+
+    /* ─── ABOUT ─── */
+    #about { background: var(--anthracite); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+    .about-img-wrap { position: relative; }
+    .about-img { width: 100%; height: 580px; object-fit: cover; display: block; filter: brightness(0.82) saturate(0.78); }
+    .about-img-frame {
+      position: absolute; top: -22px; left: -22px; right: 22px; bottom: 22px;
+      border: 1px solid rgba(212,175,55,0.18); pointer-events: none; z-index: -1;
+    }
+    .about-badge {
+      position: absolute; bottom: -1.8rem; right: -1.8rem;
+      background: var(--gold); color: var(--anthracite);
+      width: 115px; height: 115px; border-radius: 50%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+    }
+    .about-badge strong { font-family: 'Playfair Display', serif; font-size: 2.1rem; line-height: 1; }
+    .about-badge span { font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; margin-top: 2px; }
+    .about-text {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 300;
+      line-height: 1.9; color: #9a9085; margin-top: 1.5rem;
+    }
+    .about-text em { font-style: italic; color: #ccc; }
+    .about-signature { margin-top: 2.5rem; display: flex; align-items: center; gap: 1rem; }
+    .about-signature-line { width: 40px; height: 1px; background: var(--gold); }
+    .about-signature-name { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1rem; color: var(--gold); }
+
+    /* ─── STATS ─── */
+    #stats { background: var(--anthracite-mid); padding: 4.5rem 0; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; text-align: center; }
+    .stat-item {
+      padding: 1.5rem 2rem;
+      border-right: 1px solid rgba(212,175,55,0.1);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num { font-family: 'Playfair Display', serif; font-size: 3.8rem; font-weight: 400; color: var(--gold); line-height: 1; }
+    .stat-label { font-size: 0.65rem; letter-spacing: 0.32em; text-transform: uppercase; color: #555; margin-top: 0.5rem; }
+
+    /* ─── RESERVATION ─── */
+    #reservation {
+      background:
+        linear-gradient(rgba(8,8,8,0.84), rgba(8,8,8,0.84)),
+        url('https://images.unsplash.com/photo-1559339352-11d035aa65de?w=1600&q=80') center/cover no-repeat fixed;
+    }
+    .reservation-wrap { max-width: 660px; margin: 0 auto; text-align: center; }
+    .glass-form {
+      background: rgba(255,255,255,0.035);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.07); border-radius: 1px;
+      padding: 3rem; margin-top: 3rem;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+    .reservation-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      padding: 1.5rem;
+    }
+    .reservation-modal-overlay.show {
+      display: flex;
+    }
+    .reservation-modal {
+      width: min(480px, 100%);
+      background: rgba(10, 10, 10, 0.97);
+      border: 1px solid rgba(212,175,55,0.35);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.52);
+      padding: 1.5rem 1.5rem 1.25rem;
+      position: relative;
+      animation: modalFadeUp 0.25s ease;
+    }
+    @keyframes modalFadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .reservation-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(212,175,55,0.18);
+    }
+    .reservation-modal-title {
+      font-size: 0.92rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+    }
+    .reservation-modal-close {
+      border: none;
+      background: transparent;
+      color: #f5efe7;
+      font-size: 1.6rem;
+      line-height: 1;
+      cursor: pointer;
+      opacity: 0.8;
+    }
+    .reservation-modal-body {
+      text-align: center;
+      padding: 0.5rem 0 1rem;
+    }
+    .reservation-modal-check {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 1rem;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(22, 120, 68, 0.18);
+      color: #4dd17a;
+      font-size: 1.7rem;
+      box-shadow: inset 0 0 0 1px rgba(77, 209, 122, 0.35);
+    }
+    .reservation-modal-body h3 {
+      margin: 0 0 0.5rem;
+      color: #f5efe7;
+      font-size: clamp(1.5rem, 2vw, 2.1rem);
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+    }
+    .reservation-modal-body p {
+      margin: 0;
+      color: #d9d0c6;
+      font-size: 0.98rem;
+      line-height: 1.7;
+    }
+    .reservation-modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 1rem;
+    }
+    .reservation-modal-btn {
+      background: #000;
+      border: 1px solid rgba(212,175,55,0.4);
+      color: #f5efe7;
+      padding: 0.8rem 1.5rem;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .reservation-modal-btn:hover {
+      background: #111;
+      border-color: rgba(212,175,55,0.7);
+      box-shadow: 0 0 0 1px rgba(212,175,55,0.12);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.45rem; }
+    .form-group label { font-size: 0.58rem; letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold); }
+    .form-group input, .form-group select {
+      background: rgba(0,0,0,0.64); border: 1px solid rgba(212,175,55,0.2); border-radius: 1px;
+      padding: 0.85rem 1rem; color: #e8e0d0;
+      font-family: 'Inter', sans-serif; font-size: 0.85rem; outline: none;
+      transition: border-color 0.3s, background 0.3s, box-shadow 0.3s; width: 100%;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+    }
+    .form-group input::placeholder { color: #7b7b7b; }
+    .form-group input:focus, .form-group select:focus {
+      border-color: rgba(212,175,55,0.45); background: rgba(0,0,0,0.72);
+      box-shadow: 0 0 0 1px rgba(212,175,55,0.08);
+    }
+    .form-group select option { background: #1e1e1e; }
+
+    .time-picker {
+      position: relative;
+      width: 100%;
+    }
+    .time-picker-box {
+      width: 100%;
+      background: rgba(0,0,0,0.72);
+      border: 1px solid rgba(212,175,55,0.2);
+      color: #7d7d7d;
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.7rem 0.9rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .time-picker-box:hover,
+    .time-picker-box:focus {
+      border-color: rgba(212,175,55,0.45);
+      background: rgba(0,0,0,0.82);
+    }
+    .time-picker-box.active .time-value {
+      color: #f5efe7;
+    }
+    .time-picker-icon {
+      color: var(--gold);
+      font-size: 1rem;
+      line-height: 1;
+    }
+    .time-picker-menu {
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      left: 0;
+      right: 0;
+      background: rgba(10,10,10,0.98);
+      border: 1px solid rgba(212,175,55,0.25);
+      box-shadow: 0 18px 38px rgba(0,0,0,0.45);
+      z-index: 40;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      padding: 0.8rem;
+      max-height: 260px;
+    }
+    .time-picker-menu.hidden { display: none; }
+    .time-picker-column {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      max-height: 220px;
+      overflow-y: auto;
+      padding-right: 0.25rem;
+    }
+    .time-picker-column::-webkit-scrollbar { width: 6px; }
+    .time-picker-column::-webkit-scrollbar-thumb {
+      background: rgba(212,175,55,0.35);
+      border-radius: 999px;
+    }
+    .time-picker-option {
+      width: 100%;
+      background: transparent;
+      border: 1px solid rgba(212,175,55,0.12);
+      color: #ddd3c7;
+      padding: 0.6rem 0.3rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+    .time-picker-option:hover {
+      border-color: rgba(212,175,55,0.35);
+      background: rgba(212,175,55,0.08);
+    }
+    .time-picker-option.selected {
+      background: #000 !important;
+      color: #f5efe7 !important;
+      border-color: rgba(212,175,55,0.4) !important;
+      box-shadow: inset 0 0 0 1px rgba(212,175,55,0.08);
+    }
+
+    .flatpickr-calendar {
+      background: rgba(16,16,16,0.98) !important;
+      border: 1px solid rgba(212,175,55,0.25) !important;
+      box-shadow: 0 20px 42px rgba(0,0,0,0.45) !important;
+    }
+    .flatpickr-day {
+      color: #e9e2d9 !important;
+      border-radius: 50% !important;
+    }
+    .flatpickr-day:hover {
+      background: rgba(212,175,55,0.12) !important;
+      color: #f5efe7 !important;
+    }
+    .flatpickr-day.selected,
+    .flatpickr-day.selected:hover,
+    .flatpickr-day.selected:focus,
+    .flatpickr-day.selected.prevMonthDay,
+    .flatpickr-day.selected.nextMonthDay,
+    .flatpickr-day.selected.inRange,
+    .flatpickr-day.selected.today {
+      background: #000 !important;
+      border-color: rgba(212,175,55,0.38) !important;
+      color: #f5efe7 !important;
+      box-shadow: none !important;
+    }
+    .flatpickr-day.today {
+      border-color: rgba(212,175,55,0.6) !important;
+      color: var(--gold) !important;
+    }
+    .flatpickr-day.today.selected {
+      color: #f5efe7 !important;
+    }
+    .flatpickr-months .flatpickr-month,
+    .flatpickr-current-month,
+    .flatpickr-weekdays {
+      background: rgba(16,16,16,0.98) !important;
+      color: #f5efe7 !important;
+    }
+    .flatpickr-weekday {
+      color: var(--gold) !important;
+    }
+
+    #date, #time, #guests {
+      background: rgba(0,0,0,0.72) !important;
+      border: 1px solid rgba(212,175,55,0.2) !important;
+      color: #f5efe7 !important;
+      min-height: 42px !important;
+      padding: 0.7rem 0.9rem !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box;
+      border-radius: 1px;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    #date::placeholder, #time::placeholder { color: #7d7d7d; }
+    #date:focus, #time:focus, #guests:focus {
+      border-color: rgba(212,175,55,0.45) !important;
+      background: rgba(0,0,0,0.82) !important;
+    }
+    #time {
+      color: #7d7d7d !important;
+      -webkit-text-fill-color: #7d7d7d !important;
+    }
+    #time:focus, #time:valid {
+      color: #f5efe7 !important;
+      -webkit-text-fill-color: #f5efe7 !important;
+    }
+    #time::-webkit-calendar-picker-indicator {
+      filter: brightness(0.8) invert(0.85);
+    }
+    #time::-webkit-datetime-edit-text,
+    #time::-webkit-datetime-edit-hour-field,
+    #time::-webkit-datetime-edit-minute-field {
+      color: inherit;
+      -webkit-text-fill-color: inherit;
+    }
+    #date::-webkit-calendar-picker-indicator,
+    #time::-webkit-calendar-picker-indicator {
+      cursor: pointer;
+      filter: invert(0.92);
+      opacity: 1;
+    }
+    #guests {
+      background-image: linear-gradient(45deg, transparent 50%, #d4af37 50%), linear-gradient(135deg, #d4af37 50%, transparent 50%);
+      background-position: calc(100% - 16px) calc(50% - 2px), calc(100% - 11px) calc(50% - 2px);
+      background-size: 5px 5px, 5px 5px;
+      background-repeat: no-repeat;
+      padding-right: 2.4rem !important;
+    }
+
+    .form-note { font-size: 0.72rem; color: #484848; margin-top: 1.5rem; letter-spacing: 0.04em; line-height: 1.6; }
+    .btn-submit {
+      width: 100%; padding: 1rem; border: none; cursor: pointer;
+      background: var(--gold); color: var(--anthracite);
+      font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      position: relative; overflow: hidden; transition: color 0.35s;
+    }
+    .btn-submit::before {
+      content: ''; position: absolute; inset: 0; background: var(--anthracite);
+      transform: translateX(-101%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+    .btn-submit:hover { color: var(--gold); }
+    .btn-submit:hover::before { transform: translateX(0); }
+    .btn-submit span { position: relative; z-index: 1; }
+
+    /* ─── CONTACT ─── */
+    #contact { background: var(--anthracite); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem; margin-top: 4rem; }
+    .contact-card { border-top: 1px solid rgba(212,175,55,0.18); padding-top: 2rem; }
+    .contact-card-icon { font-size: 1.4rem; margin-bottom: 1rem; }
+    .contact-card-title {
+      font-size: 0.6rem; letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem;
+    }
+    .contact-card p { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: #7a7068; line-height: 1.85; }
+    .contact-card a {
+      color: #7a7068;
+      text-decoration: none;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    .contact-card a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 100%;
+      height: 1px;
+      background: rgba(212,175,55,0.7);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.25s ease;
+    }
+    .contact-card a:hover {
+      color: var(--gold);
+    }
+    .contact-card a:hover::after {
+      transform: scaleX(1);
+    }
+    #contactAddress {
+      transition: color 0.3s ease;
+    }
+    #contactAddress:hover {
+      color: var(--gold);
+    }
+    #contactAddress a {
+      color: inherit;
+      transition: color 0.3s ease;
+    }
+    #contactAddress a:hover {
+      color: var(--gold);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #111; border-top: 1px solid rgba(212,175,55,0.08);
+      padding: 3rem 2rem; text-align: center;
+    }
+    .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--gold); letter-spacing: 0.1em; }
+    .footer-links { display: flex; justify-content: center; gap: 2rem; margin: 1.5rem 0; }
+    .footer-links a, .footer-links button {
+      font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: #444; text-decoration: none; background: none; border: none; cursor: pointer; transition: color 0.3s;
+    }
+    .footer-links a:hover, .footer-links button:hover { color: var(--gold); }
+    .footer-copy { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: #383838; margin-top: 0.5rem; }
+
+    /* ─── ADMIN LOGIN ─── */
+    .admin-login {
+      position: fixed; inset: 0; background: rgba(8,8,8,0.88); z-index: 200; display: flex; align-items: center; justify-content: center; padding: 1.5rem;
+    }
+    .admin-login.hidden { display: none; }
+    .admin-login-box {
+      width: min(420px, 100%); background: rgba(22,22,22,0.98); border: 1px solid rgba(212,175,55,0.2); padding: 2rem 1.5rem; box-shadow: 0 24px 50px rgba(0,0,0,0.45);
+    }
+    .admin-login-box h3 {
+      font-family: 'Playfair Display', serif; color: var(--gold); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 1rem; font-size: 1.8rem; text-align: center;
+    }
+    .admin-login-box p {
+      text-align: center; color: #8d837a; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1.4rem;
+    }
+    .admin-login-box input {
+      width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(212,175,55,0.15); padding: 0.9rem 1rem; color: #f5efe7; margin-bottom: 1rem; outline: none;
+    }
+    .admin-login-box button {
+      width: 100%; background: var(--gold); color: var(--anthracite); border: none; padding: 0.9rem 1rem; font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; cursor: pointer;
+    }
+    .admin-login-box .login-error {
+      min-height: 1.2rem; color: #ffb3b3; font-size: 0.68rem; letter-spacing: 0.06em; margin-bottom: 1rem; text-align: center;
+    }
+
+    /* ─── TAM EKRAN ADMIN PANELİ (FULL-SCREEN GRID) ─── */
+    .admin-panel {
+      position: fixed; inset: 0; width: 100vw; height: 100vh;
+      background: rgba(10,10,10,0.98); backdrop-filter: blur(10px);
+      z-index: 110; overflow-y: auto;
+      opacity: 0; pointer-events: none; transition: opacity 0.35s ease;
+    }
+    .admin-panel.open { opacity: 1; pointer-events: auto; }
+
+    #adminItems {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem;
+    }
+    .admin-item {
+      background: #111; border: 1px solid #1f2937; border-radius: 1rem;
+      padding: 1.5rem; display: flex; flex-direction: column; position: relative;
+    }
+    .admin-item h4 {
+      font-size: 1.1rem; color: var(--gold); margin-bottom: 0.2rem; font-weight: 600; letter-spacing: 0.02em; text-transform: none;
+    }
+    .admin-item small {
+      display: block; color: #9ca3af; font-size: 0.75rem; margin-bottom: 1.25rem; letter-spacing: 0; text-transform: none;
+    }
+    .admin-item .mini-actions {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+    }
+    .admin-item .mini-actions button {
+      border: 1px solid rgba(239,68,68,0.5); background: rgba(239,68,68,0.1); color: #ef4444;
+      padding: 0.4rem 0.8rem; font-size: 0.65rem; border-radius: 0.4rem; text-transform: uppercase; font-weight: 600; cursor: pointer; transition: all 0.2s;
+    }
+    .admin-item .mini-actions button:hover { background: #ef4444; color: #fff; }
+    
+    .admin-field { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+    .admin-field label { font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: #9ca3af; font-weight: 600; }
+    .admin-field input, .admin-field textarea {
+      width: 100%; background: #030712; border: 1px solid #1f2937; border-radius: 0.5rem;
+      padding: 0.75rem 1rem; color: #f3f4f6; font-size: 0.85rem; outline: none; transition: border-color 0.3s;
+    }
+    .admin-field input:focus, .admin-field textarea:focus { border-color: var(--gold); }
+    .admin-field textarea { min-height: 80px; resize: vertical; }
+
+    /* ─── Keyframes ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 900px) {
+      .container { padding: 0 1.25rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-img { height: 380px; }
+      .stats-grid { grid-template-columns: repeat(2,1fr); }
+      .contact-grid { grid-template-columns: 1fr 1fr; }
+      nav {
+        padding: 1rem 1rem 0.75rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.7rem;
+      }
+      .nav-links {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.75rem 1.1rem;
+        width: 100%;
+      }
+      .nav-links a {
+        margin-left: 0;
+        font-size: 0.56rem;
+        letter-spacing: 0.16em;
+      }
+      .nav-logo { font-size: 0.9rem; }
+      .glass-form { padding: 2rem 1.25rem; }
+      .reservation-modal { width: min(92vw, 420px); }
+      .time-picker-menu { max-height: 240px; }
+    }
+    @media (max-width: 620px) {
+      .container { padding: 0 1rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr 1fr; }
+      .contact-card:nth-child(3) { grid-column: 1 / -1; }
+      .glass-form { padding: 1.5rem 1rem; }
+      .stats-grid { grid-template-columns: repeat(2,1fr); }
+      .section-title { font-size: clamp(2.1rem, 9vw, 3rem); }
+      .hero-content { padding: 0 1rem; }
+      .hero-title { font-size: clamp(2.6rem, 14vw, 4.2rem); }
+      .hero-sub { font-size: 0.9rem; }
+      .btn-primary, .btn-outline { width: 100%; justify-content: center; }
+      .menu-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+      .menu-card-img-wrap { height: 150px; }
+      .menu-card-body { padding: 0.8rem; }
+      .menu-card-category {
+        font-size: 0.42rem;
+        letter-spacing: 0.18em;
+        margin-bottom: 0.4rem;
+      }
+      .menu-card-title { font-size: 0.9rem; margin-bottom: 0.35rem; }
+      .menu-card-desc {
+        font-size: 0.62rem;
+        line-height: 1.5;
+        margin-bottom: 0.7rem;
+      }
+      .menu-card-footer {
+        padding-top: 0.6rem;
+      }
+      .menu-card-price { font-size: 1.05rem; }
+      .menu-tag {
+        font-size: 0.45rem;
+        letter-spacing: 0.12em;
+        padding: 0.22rem 0.45rem;
+      }
+      .about-img-wrap { margin-bottom: 1rem; }
+      .about-img { height: 360px; }
+      .about-img-frame { left: -12px; right: 12px; bottom: 12px; top: -12px; }
+      .about-badge {
+        width: 90px; height: 90px; right: 0.5rem; bottom: -0.8rem;
+      }
+      .about-badge strong { font-size: 1.5rem; }
+      .about-badge span { font-size: 0.48rem; letter-spacing: 0.1em; }
+      .about-text {
+        font-size: 1.08rem; line-height: 1.7;
+      }
+      .about-signature { flex-wrap: wrap; }
+      .about-signature-name { font-size: 0.9rem; }
+      .contact-card, .contact-card-title, .contact-card p { word-break: break-word; }
+      .footer-links { flex-wrap: wrap; gap: 0.75rem 1.25rem; }
+      .admin-login-box { width: min(90vw, 320px); }
+      .reservation-modal { padding: 1rem; }
+      .reservation-modal-body h3 { font-size: 1.8rem; }
+      .time-picker-menu { grid-template-columns: 1fr 1fr; }
+      .time-picker-column { max-height: 180px; }
+      .time-picker-box { letter-spacing: 0.04em; }
+    }
+  </style>
+</head>
+<body>
+<script>
+  document.addEventListener('touchstart', function (event) {
+    if (event.touches.length > 1) {
+      event.preventDefault();
+    }
+  }, { passive: false });
+
+  document.addEventListener('touchmove', function (event) {
+    if (event.touches.length > 1) {
+      event.preventDefault();
+    }
+  }, { passive: false });
+
+  ['gesturestart', 'gesturechange', 'gestureend'].forEach(function (eventName) {
+    document.addEventListener(eventName, function (event) {
+      event.preventDefault();
+    }, { passive: false });
+  });
+</script>
+
+<!-- GİRİŞ EKRANI -->
+<div id="adminLogin" class="admin-login hidden">
+  <div class="admin-login-box">
+    <h3>Admin</h3>
+    <p>Yönetim paneline giriş</p>
+    <div id="loginError" class="login-error"></div>
+    <input id="loginPassword" type="password" placeholder="Şifre girin" />
+    <button id="loginBtn" type="button">Giriş Yap</button>
+  </div>
+</div>
+
+<!-- TAM EKRAN YÖNETİM PANELİ -->
+<aside id="adminPanel" class="admin-panel" aria-label="Admin paneli">
+  <div class="max-w-7xl mx-auto p-6 md:p-10">
+    
+    <!-- Üst Başlık ve Çıkış Butonu -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-gray-800 pb-6 mb-8 gap-4">
+        <div>
+            <h2 class="text-3xl font-bold tracking-tight text-amber-500">Yönetim Paneli</h2>
+            <p class="text-sm text-gray-400 mt-2">Bu panel üzerinden restoran menüsünü güncelleyebilir, site metinlerini değiştirebilir ve verilerinizi yönetebilirsiniz.</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <button id="logoutBtn" class="text-gray-500 hover:text-red-400 text-sm font-medium transition px-3" type="button">Güvenli Çıkış Yap</button>
+            <button id="adminClose" class="bg-red-600/10 hover:bg-red-600 text-red-500 hover:text-white px-5 py-2.5 rounded-xl font-medium transition border border-red-500/30 flex items-center gap-2" type="button" aria-label="Kapat">
+                Paneli Kapat
+            </button>
+        </div>
+    </div>
+
+    <!-- Bilgilendirme ve Hızlı İşlemler Kartları -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+        <div class="bg-[#111] border border-gray-800 p-5 rounded-2xl flex flex-col justify-between">
+            <div>
+                <h3 class="text-gray-400 text-sm font-medium">Yeni İçerik</h3>
+                <p class="text-xs text-gray-500 mt-1 mb-4">Menüye yeni bir yemek veya içecek alanı ekleyin.</p>
+            </div>
+            <button id="addMenuItemBtn" class="w-full bg-gray-900 hover:bg-amber-600/20 hover:text-amber-500 hover:border-amber-500/50 border border-gray-800 text-gray-300 py-2.5 rounded-lg transition text-sm">
+                + Yeni Menü Ekle
+            </button>
+        </div>
+        <div class="bg-[#111] border border-gray-800 p-5 rounded-2xl flex flex-col justify-between">
+            <div>
+                <h3 class="text-gray-400 text-sm font-medium">Kayıt İşlemi</h3>
+                <p class="text-xs text-gray-500 mt-1 mb-4">Değişiklikleri kaydedip anında siteye yansıtın.</p>
+            </div>
+            <button id="saveMenuBtn" class="w-full bg-amber-600 hover:bg-amber-500 text-gray-950 font-semibold py-2.5 rounded-lg transition shadow-lg shadow-amber-600/20 text-sm">
+                Değişiklikleri Kaydet
+            </button>
+        </div>
+        <div class="bg-[#111] border border-gray-800 p-5 rounded-2xl flex flex-col justify-between">
+            <div>
+                <h3 class="text-gray-400 text-sm font-medium">Veri Yedekleme</h3>
+                <p class="text-xs text-gray-500 mt-1 mb-4">Verilerinizi güvence altına alın (JSON Formatı).</p>
+            </div>
+            <button id="exportDataBtn" class="w-full bg-gray-900 hover:bg-blue-600/20 hover:text-blue-400 hover:border-blue-500/50 border border-gray-800 text-gray-300 py-2.5 rounded-lg transition text-sm">
+                Yedeği İndir
+            </button>
+        </div>
+        <div class="bg-[#111] border border-gray-800 p-5 rounded-2xl flex flex-col justify-between">
+            <div>
+                <h3 class="text-gray-400 text-sm font-medium">Geri Yükleme & Sıfırlama</h3>
+                <p class="text-xs text-gray-500 mt-1 mb-4">Yedekten dönün veya siteyi varsayılana sıfırlayın.</p>
+            </div>
+            <div class="flex gap-2">
+                <button id="importDataBtn" class="flex-1 bg-gray-900 hover:bg-green-600/20 hover:text-green-400 hover:border-green-500/50 border border-gray-800 text-gray-300 py-2.5 rounded-lg transition text-sm">
+                    Yükle
+                </button>
+                <button id="resetMenuBtn" class="flex-1 bg-gray-900 hover:bg-red-600/20 hover:text-red-400 hover:border-red-500/50 border border-gray-800 text-gray-300 py-2.5 rounded-lg transition text-sm">
+                    Sıfırla
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dinamik İçerik Alanı (Formlar) -->
+    <div class="flex items-center justify-between mb-6 border-b border-gray-800 pb-2">
+        <h3 class="text-xl font-semibold tracking-tight text-white">Sistem Modülleri ve Veri Alanları</h3>
+    </div>
+    
+    <div id="adminItems"></div>
+    
+  </div>
+</aside>
+
+<input id="importDataInput" type="file" accept="application/json" style="display:none;" />
+
+<!-- ══════ NAV ══════ -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <span id="brandName">Lucht</span>
+    <span id="brandTag">Gastronomy</span>
+  </div>
+  <div class="nav-links">
+    <a id="navMenuLink" href="#menu">Menü</a>
+    <a id="navAboutLink" href="#about">Hikayemiz</a>
+    <a id="navReservationLink" href="#reservation">Rezervasyon</a>
+    <a id="navContactLink" href="#contact">İletişim</a>
+  </div>
+</nav>
+
+<!-- ══════ HERO ══════ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-content">
+    <span id="heroEyebrow" class="hero-eyebrow">Bursa · 2018'den Beri</span>
+    <h1 id="heroTitle" class="hero-title">
+      Lezzetin<br><em>Modern</em> Yüzü
+    </h1>
+    <p id="heroSub" class="hero-sub">Anadolu'nun Özü, Dünya'nın Ruhu</p>
+    <a href="#reservation" class="btn-primary"><span>Rezervasyon Yap</span></a>
+    <a href="#menu" class="btn-outline">Menüyü Keşfet</a>
+  </div>
+  <div class="hero-scroll">
+    <span>Keşfet</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ══════ MENU ══════ -->
+<section id="menu">
+  <div class="container">
+    <div class="reveal" style="text-align:center">
+      <span id="menuTag" class="section-tag">Öne Çıkan Lezzetler</span>
+      <h2 id="menuTitle" class="section-title">Şefin Seçkisi</h2>
+      <div style="margin-top:1.2rem;display:flex;justify-content:center;">
+        <div class="gold-line"></div>
+      </div>
+    </div>
+
+    <div id="menuGrid" class="menu-grid"></div>
+  </div>
+</section>
+
+<!-- ══════ ABOUT ══════ -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal">
+        <div class="about-img-frame"></div>
+        <img class="about-img" src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=800&q=80" alt="Şef" loading="lazy"/>
+        <div class="about-badge">
+          <strong id="aboutBadgeValue">15+</strong>
+          <span id="aboutBadgeLabel">Yıllık Deneyim</span>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <span class="section-tag">Hakkımızda</span>
+        <h2 id="aboutTitle" class="section-title">Mutfak Bir<br>Manifestodur</h2>
+        <div style="margin-top:1rem">
+          <div class="gold-line"></div>
+        </div>
+        <p id="aboutText1" class="about-text">
+          Her tabak, <em>bir anın kristalize halidir.</em> Bursa'nın topraklarından,
+          Anadolu'nun binlerce yıllık lezzet mirasından beslenerek oluşturduk Lucht'u.
+          Bize göre mutfak; kimyanın şiire, ısının sanata dönüştüğü o
+          <em>eşsiz kesişme noktasıdır.</em>
+        </p>
+        <p id="aboutText2" class="about-text" style="margin-top:1rem">
+          Yerel üreticilerle kurduğumuz derin ilişki, her mevsim değişen menümüze
+          güç verir. Sizi soframıza davet etmek, bir yemekten çok
+          <em>bir anı birlikte yaşamak</em> anlamına gelir.
+        </p>
+        <div class="about-signature">
+          <div class="about-signature-line"></div>
+          <span id="aboutSignature" class="about-signature-name">Ahmet Lucht, Baş Şef &amp; Kurucu</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ STATS ══════ -->
+<section id="stats">
+  <div class="container">
+    <div id="statsGrid" class="stats-grid"></div>
+  </div>
+</section>
+
+<!-- ══════ RESERVATION ══════ -->
+<section id="reservation">
+  <div class="container">
+    <div class="reservation-wrap">
+      <div class="reveal">
+        <span id="reservationTag" class="section-tag">Masa Ayırt</span>
+        <h2 id="reservationTitle" class="section-title">Hızlı Rezervasyon</h2>
+        <p id="reservationText" style="margin-top:1rem;color:#555;font-size:0.82rem;letter-spacing:0.04em;line-height:1.8;">
+          Özel anlarınız için masanızı şimdiden ayırtın.<br>
+          24 saat içinde onay mesajı alacaksınız.
+        </p>
+      </div>
+
+      <div class="glass-form reveal reveal-delay-1">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Ad Soyad</label>
+            <input type="text" id="name" placeholder="Adınız ve soyadınız"/>
+          </div>
+          <div class="form-group">
+            <label for="phone">Telefon</label>
+            <input type="tel" id="phone" placeholder="+90 500 000 00 00"/>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="date">Tarih</label>
+            <input type="text" id="date" placeholder="gg/aa/yyyy" style="cursor:pointer;" readonly inputmode="none"/>
+          </div>
+          <div class="form-group">
+            <label for="time">Saat</label>
+            <div class="time-picker">
+              <div id="timePickerBox" class="time-picker-box" tabindex="0" role="button" aria-label="Saat seçimi">
+                <span id="timePickerValue" class="time-value">00:00</span>
+                <span class="time-picker-icon">◌</span>
+              </div>
+              <div id="timePickerMenu" class="time-picker-menu hidden" aria-label="Saat seçenekleri">
+                <div class="time-picker-column">
+                  <button type="button" class="time-picker-option" data-hour="00">00</button>
+                  <button type="button" class="time-picker-option" data-hour="01">01</button>
+                  <button type="button" class="time-picker-option" data-hour="02">02</button>
+                  <button type="button" class="time-picker-option" data-hour="03">03</button>
+                  <button type="button" class="time-picker-option" data-hour="04">04</button>
+                  <button type="button" class="time-picker-option" data-hour="05">05</button>
+                  <button type="button" class="time-picker-option" data-hour="06">06</button>
+                  <button type="button" class="time-picker-option" data-hour="07">07</button>
+                  <button type="button" class="time-picker-option" data-hour="08">08</button>
+                  <button type="button" class="time-picker-option" data-hour="09">09</button>
+                  <button type="button" class="time-picker-option" data-hour="10">10</button>
+                  <button type="button" class="time-picker-option" data-hour="11">11</button>
+                  <button type="button" class="time-picker-option" data-hour="12">12</button>
+                  <button type="button" class="time-picker-option" data-hour="13">13</button>
+                  <button type="button" class="time-picker-option" data-hour="14">14</button>
+                  <button type="button" class="time-picker-option" data-hour="15">15</button>
+                  <button type="button" class="time-picker-option" data-hour="16">16</button>
+                  <button type="button" class="time-picker-option" data-hour="17">17</button>
+                  <button type="button" class="time-picker-option" data-hour="18">18</button>
+                  <button type="button" class="time-picker-option" data-hour="19">19</button>
+                  <button type="button" class="time-picker-option" data-hour="20">20</button>
+                  <button type="button" class="time-picker-option" data-hour="21">21</button>
+                  <button type="button" class="time-picker-option" data-hour="22">22</button>
+                  <button type="button" class="time-picker-option" data-hour="23">23</button>
+                </div>
+                <div class="time-picker-column">
+                  <button type="button" class="time-picker-option selected" data-minute="00">00</button>
+                  <button type="button" class="time-picker-option" data-minute="05">05</button>
+                  <button type="button" class="time-picker-option" data-minute="10">10</button>
+                  <button type="button" class="time-picker-option" data-minute="15">15</button>
+                  <button type="button" class="time-picker-option" data-minute="20">20</button>
+                  <button type="button" class="time-picker-option" data-minute="25">25</button>
+                  <button type="button" class="time-picker-option" data-minute="30">30</button>
+                  <button type="button" class="time-picker-option" data-minute="35">35</button>
+                  <button type="button" class="time-picker-option" data-minute="40">40</button>
+                  <button type="button" class="time-picker-option" data-minute="45">45</button>
+                  <button type="button" class="time-picker-option" data-minute="50">50</button>
+                  <button type="button" class="time-picker-option" data-minute="55">55</button>
+                </div>
+              </div>
+              <input type="hidden" id="time" value="" />
+            </div>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:1.75rem">
+          <label for="guests">Kişi Sayısı</label>
+          <select id="guests">
+            <option value="">Kişi sayısı seçin</option>
+            <option>1 Kişi</option>
+            <option>2 Kişi</option>
+            <option>3 Kişi</option>
+            <option>4 Kişi</option>
+            <option>5–6 Kişi</option>
+            <option>7–10 Kişi (Özel Salon)</option>
+            <option>10+ Kişi (Etkinlik)</option>
+          </select>
+        </div>
+        <button type="button" class="btn-submit" onclick="handleReservation()">Rezervasyonu Tamamla</button>
+        <p class="form-note">* Talebiniz 24 saat içinde e-posta veya telefon ile onaylanacaktır.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ CONTACT ══════ -->
+<section id="contact">
+  <div class="container">
+    <div class="reveal" style="text-align:center">
+      <span id="contactTag" class="section-tag">Bize Ulaşın</span>
+      <h2 id="contactTitle" class="section-title">İletişim &amp; Konum</h2>
+      <div style="margin-top:1.2rem;display:flex;justify-content:center;">
+        <div class="gold-line"></div>
+      </div>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-card reveal reveal-delay-1">
+        <div class="contact-card-icon">📍</div>
+        <div class="contact-card-title">Adres</div>
+        <p id="contactAddress">
+          Nilüfer, Özlüce Mah.<br>
+          Beşevler Cad. No: 42<br>
+          Bursa, Türkiye 16110
+        </p>
+      </div>
+      <div class="contact-card reveal reveal-delay-2">
+        <div class="contact-card-icon">🕐</div>
+        <div class="contact-card-title">Çalışma Saatleri</div>
+        <p id="contactHours">
+          Salı – Cuma<br>
+          12:00–15:00 &nbsp;·&nbsp; 19:00–23:00<br><br>
+          Cumartesi – Pazar<br>
+          12:00 – 23:00 (Kesintisiz)<br><br>
+          <span style="color:#484848;font-size:0.9rem;">Pazartesi kapalı</span>
+        </p>
+      </div>
+      <div class="contact-card reveal reveal-delay-3">
+        <div class="contact-card-icon">✉️</div>
+        <div class="contact-card-title">İletişim</div>
+        <p id="contactInfo">
+          <a href="tel:+902242220042">+90 (224) 222 00 42</a><br><br>
+          <a href="mailto:rezervasyon@luchtgastronomy.com">rezervasyon@luchtgastronomy.com</a><br><br>
+          <a href="#">Instagram &nbsp;·&nbsp; TripAdvisor</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="reservationModalOverlay" class="reservation-modal-overlay" aria-hidden="true">
+  <div class="reservation-modal" role="dialog" aria-modal="true" aria-labelledby="reservationModalTitle">
+    <div class="reservation-modal-header">
+      <div id="reservationModalTitle" class="reservation-modal-title">Rezervasyon</div>
+      <button type="button" class="reservation-modal-close" aria-label="Kapat" onclick="closeReservationModal()">×</button>
+    </div>
+    <div class="reservation-modal-body">
+      <div class="reservation-modal-check">✓</div>
+      <h3>Rezervasyonunuz onaylandı</h3>
+      <p>Teşekkür ederiz. Talebiniz başarıyla alındı ve ekibimiz en kısa sürede sizinle iletişime geçecektir.</p>
+    </div>
+    <div class="reservation-modal-footer">
+      <button type="button" class="reservation-modal-btn" onclick="closeReservationModal()">Tamam</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ FOOTER ══════ -->
+<footer>
+  <div id="footerBrand" class="footer-logo">Lucht Gastronomy</div>
+  <div class="footer-links">
+    <a href="#menu">Menü</a>
+    <a href="#about">Hikayemiz</a>
+    <a href="#reservation">Rezervasyon</a>
+    <a href="#contact">İletişim</a>
+    <a href="#">Gizlilik Politikası</a>
+    <button id="adminFooterToggle" type="button">Panel</button>
+  </div>
+  <div style="margin:1.5rem auto;width:55px;height:1px;background:linear-gradient(90deg,transparent,#2e2e2e,transparent);"></div>
+  <p class="footer-copy">© 2025 Lucht Gastronomy — Tüm Hakları Saklıdır · Bursa, Türkiye</p>
+</footer>
+
+<script>
+  const defaultSiteData = {
+    site: {
+      brandName: 'Lucht',
+      brandTag: 'Gastronomy',
+      footerBrand: 'Lucht Gastronomy',
+      navMenu: 'Menü',
+      navAbout: 'Hikayemiz',
+      navReservation: 'Rezervasyon',
+      navContact: 'İletişim',
+      heroBg: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1800&q=80',
+      heroEyebrow: 'Bursa · 2018\'den Beri',
+      heroTitle: 'Lezzetin<br><em>Modern</em> Yüzü',
+      heroSub: 'Anadolu\'nun Özü, Dünya\'nın Ruhu',
+      buttonPrimary: 'Rezervasyon Yap',
+      buttonSecondary: 'Menüyü Keşfet',
+      menuTag: 'Öne Çıkan Lezzetler',
+      menuTitle: 'Şefin Seçkisi',
+      aboutTag: 'Hakkımızda',
+      aboutTitle: 'Mutfak Bir<br>Manifestodur',
+      reservationTag: 'Masa Ayırt',
+      reservationTitle: 'Hızlı Rezervasyon',
+      reservationText: 'Özel anlarınız için masanızı şimdiden ayırtın.<br>24 saat içinde onay mesajı alacaksınız.',
+      contactTag: 'Bize Ulaşın',
+      contactTitle: 'İletişim &amp; Konum'
+    },
+    about: {
+      title: 'Mutfak Bir<br>Manifestodur',
+      image: 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=800&q=80',
+      badgeValue: '15+',
+      badgeLabel: 'Yıllık Deneyim',
+      text1: 'Her tabak, <em>bir anın kristalize halidir.</em> Bursa\'ın topraklarından, Anadolu\'nun binlerce yıllık lezzet mirasından beslenerek oluşturduk Lucht\'u. Bize göre mutfak; kimyanın şiire, ısının sanata dönüştüğü o <em>eşsiz kesişme noktasıdır.</em>',
+      text2: 'Yerel üreticilerle kurduğumuz derin ilişki, her mevsim değişen menümüze güç verir. Sizi soframıza davet etmek, bir yemekten çok <em>bir anı birlikte yaşamak</em> anlamına gelir.',
+      signature: 'Ahmet Lucht, Baş Şef & Kurucu'
+    },
+    contact: {
+      address: 'Nilüfer, Özlüce Mah.<br>Beşevler Cad. No: 42<br>Bursa, Türkiye 16110',
+      addressLink: 'https://www.google.com/maps/search/?api=1&query=Nil%C3%BCfer+%C3%96zl%C3%BCce+Mahallesi+Be%C5%9Fevler+Cad.+No:+42+Bursa+T%C3%BCrkiye',
+      hours: 'Salı – Cuma<br>12:00–15:00 &nbsp;·&nbsp; 19:00–23:00<br><br>Cumartesi – Pazar<br>12:00 – 23:00 (Kesintisiz)<br><br><span style="color:#484848;font-size:0.9rem;">Pazartesi kapalı</span>',
+      phone: '+90 (224) 222 00 42',
+      email: 'rezervasyon@luchtgastronomy.com',
+      instagram: 'https://www.instagram.com/',
+      tripadvisor: 'https://www.tripadvisor.com/',
+      socialText: 'Instagram · TripAdvisor',
+      socialLink: 'https://www.instagram.com/',
+      info: '<a href="tel:+902242220042">+90 (224) 222 00 42</a><br><br><a href="mailto:rezervasyon@luchtgastronomy.com">rezervasyon@luchtgastronomy.com</a><br><br><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram · TripAdvisor</a>'
+    },
+    stats: [
+      { value: '12', label: 'Uluslararası Ödül' },
+      { value: '48', label: 'Mevsimlik Tabak' },
+      { value: '6', label: 'Yıl Bursa\'da' },
+      { value: '3', label: 'Michelin Yıldızı' }
+    ]
+  };
+
+  const defaultMenuItems = [
+    {
+      category: 'Ana Yemek',
+      title: 'Kuzugöbeği Risotto',
+      description: 'Kurutulmuş kuzugöbeği mantarı, parmesan espuma, taze kekik yağı ve kavrulmuş fındık.',
+      price: '₺485',
+      tag: 'Şef Önerisi',
+      image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80'
+    },
+    {
+      category: 'Izgara',
+      title: 'Wagyu Kaburga',
+      description: '72 saat sous-vide pişirilmiş, demi-glace sos, yer elması püresi ve mevsim otları.',
+      price: '₺980',
+      tag: 'İmza Lezzet',
+      image: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80'
+    },
+    {
+      category: 'Deniz Ürünleri',
+      title: 'Levrek Ceviche',
+      description: 'Taze levrek, yuzu-limon vinaigrette, avokado mus ve nar taneleri ile sunulur.',
+      price: '₺390',
+      tag: 'Mevsimlik',
+      image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=80'
+    },
+    {
+      category: 'Tatlı',
+      title: 'Fondü Sphere',
+      description: '%70 bitter çikolata küre, sıcak caramel ile eritilir; fıstık pralin ve vanilya dondurması.',
+      price: '₺260',
+      tag: 'En Çok Sevilen',
+      image: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&q=80'
+    }
+  ];
+
+  const siteStorageKey = 'lucht_site_data';
+  let isRemoteSyncInProgress = false;
+
+  function getStoredAppData() {
+    try {
+      const raw = localStorage.getItem(siteStorageKey);
+      return raw ? JSON.parse(raw) : null;
+    } catch (error) {
+      console.warn('Stored data could not be parsed; restoring defaults.', error);
+      return null;
+    }
+  }
+
+  function normalizeAppData(data) {
+    const safe = {
+      site: { ...defaultSiteData.site, ...(data && data.site ? data.site : {}) },
+      about: { ...defaultSiteData.about, ...(data && data.about ? data.about : {}) },
+      contact: { ...defaultSiteData.contact, ...(data && data.contact ? data.contact : {}) },
+      stats: Array.isArray(data && data.stats) ? data.stats : defaultSiteData.stats,
+      menuItems: Array.isArray(data && data.menuItems) && data.menuItems.length ? data.menuItems : defaultMenuItems
+    };
+
+    return safe;
+  }
+
+  let appData = normalizeAppData(null);
+
+  function saveAppData() {
+    localStorage.setItem(siteStorageKey, JSON.stringify(appData));
+  }
+
+  async function saveAppDataToFirestore() {
+    const siteRef = window.siteDataDocRef;
+    if (!siteRef) {
+      console.warn('Firebase Firestore başlatılmadı. siteDataDocRef bulunamadı.');
+      return false;
+    }
+
+    isRemoteSyncInProgress = true;
+    try {
+      await window.firebaseSetDoc(siteRef, {
+        ...appData,
+        updatedAt: new Date().toISOString()
+      }, { merge: true });
+      console.log('Firestore yazma başarılı:', appData.menuItems.length, 'menü öğesi');
+      return true;
+    } catch (error) {
+      console.error('Firestore veri yazma hatası:', error);
+      return false;
+    } finally {
+      isRemoteSyncInProgress = false;
+    }
+  }
+
+  async function loadRemoteAppData() {
+    const siteRef = window.siteDataDocRef;
+    if (!siteRef) return;
+
+    try {
+      const snapshot = await window.firebaseGetDoc(siteRef);
+
+      if (!snapshot.exists()) {
+        const localData = normalizeAppData(getStoredAppData());
+        appData = localData;
+        await saveAppDataToFirestore();
+        saveAppData();
+        renderPageData();
+        renderMenu();
+        renderAdminPanel();
+        return;
+      }
+
+      const remoteData = snapshot.data();
+      appData = normalizeAppData(remoteData);
+      saveAppData();
+      renderPageData();
+      renderMenu();
+      renderAdminPanel();
+    } catch (error) {
+      console.error('Firestore veri yükleme hatası:', error);
+      appData = normalizeAppData(getStoredAppData());
+      renderPageData();
+      renderMenu();
+      renderAdminPanel();
+    }
+  }
+
+  function subscribeToFirestoreData() {
+    const siteRef = window.siteDataDocRef;
+    if (!siteRef) {
+      console.warn('Firestore listener başlatılamadı: siteRef yok.');
+      return;
+    }
+
+    window.firebaseOnSnapshot(siteRef, (snapshot) => {
+      if (!snapshot.exists()) {
+        console.log('Firestore dokümanı yok; ilk kez oluşturuluyor.');
+        saveAppDataToFirestore();
+        return;
+      }
+
+      const remoteData = snapshot.data();
+      const nextData = normalizeAppData(remoteData);
+
+      if (JSON.stringify(nextData) === JSON.stringify(appData)) return;
+      if (isRemoteSyncInProgress) return;
+
+      appData = nextData;
+      saveAppData();
+      renderPageData();
+      renderMenu();
+      renderAdminPanel();
+      console.log('Firestore anlık güncelleme alındı.');
+    }, (error) => {
+      console.error('Firestore real-time listener hatası:', error);
+    });
+  }
+
+  function renderPageData() {
+    const brandName = document.getElementById('brandName');
+    const brandTag = document.getElementById('brandTag');
+    const footerBrand = document.getElementById('footerBrand');
+    const heroEyebrow = document.getElementById('heroEyebrow');
+    const heroTitle = document.getElementById('heroTitle');
+    const heroSub = document.getElementById('heroSub');
+    const navMenuLink = document.getElementById('navMenuLink');
+    const navAboutLink = document.getElementById('navAboutLink');
+    const navReservationLink = document.getElementById('navReservationLink');
+    const navContactLink = document.getElementById('navContactLink');
+    const menuTag = document.getElementById('menuTag');
+    const menuTitle = document.getElementById('menuTitle');
+    const aboutTag = document.querySelector('#about .section-tag');
+    const aboutTitle = document.getElementById('aboutTitle');
+    const aboutBadgeValue = document.getElementById('aboutBadgeValue');
+    const aboutBadgeLabel = document.getElementById('aboutBadgeLabel');
+    const aboutText1 = document.getElementById('aboutText1');
+    const aboutText2 = document.getElementById('aboutText2');
+    const aboutSignature = document.getElementById('aboutSignature');
+    const reservationTag = document.getElementById('reservationTag');
+    const reservationTitle = document.getElementById('reservationTitle');
+    const reservationText = document.getElementById('reservationText');
+    const contactTag = document.getElementById('contactTag');
+    const contactTitle = document.getElementById('contactTitle');
+    const contactAddress = document.getElementById('contactAddress');
+    const contactHours = document.getElementById('contactHours');
+    const contactInfo = document.getElementById('contactInfo');
+
+    if (brandName) brandName.textContent = appData.site.brandName || defaultSiteData.site.brandName;
+    if (brandTag) brandTag.textContent = appData.site.brandTag || defaultSiteData.site.brandTag;
+    if (footerBrand) footerBrand.textContent = appData.site.footerBrand || defaultSiteData.site.footerBrand;
+    if (navMenuLink) navMenuLink.textContent = appData.site.navMenu || defaultSiteData.site.navMenu;
+    if (navAboutLink) navAboutLink.textContent = appData.site.navAbout || defaultSiteData.site.navAbout;
+    if (navReservationLink) navReservationLink.textContent = appData.site.navReservation || defaultSiteData.site.navReservation;
+    if (navContactLink) navContactLink.textContent = appData.site.navContact || defaultSiteData.site.navContact;
+    if (heroEyebrow) heroEyebrow.textContent = appData.site.heroEyebrow || defaultSiteData.site.heroEyebrow;
+    if (heroTitle) heroTitle.innerHTML = appData.site.heroTitle || defaultSiteData.site.heroTitle;
+    if (heroSub) heroSub.textContent = appData.site.heroSub || defaultSiteData.site.heroSub;
+    if (menuTag) menuTag.textContent = appData.site.menuTag || defaultSiteData.site.menuTag;
+    if (menuTitle) menuTitle.textContent = appData.site.menuTitle || defaultSiteData.site.menuTitle;
+    if (aboutTag) aboutTag.textContent = appData.site.aboutTag || defaultSiteData.site.aboutTag;
+    if (aboutTitle) aboutTitle.innerHTML = appData.site.aboutTitle || appData.about.title || defaultSiteData.site.aboutTitle;
+    if (aboutBadgeValue) aboutBadgeValue.textContent = appData.about.badgeValue || defaultSiteData.about.badgeValue;
+    if (aboutBadgeLabel) aboutBadgeLabel.textContent = appData.about.badgeLabel || defaultSiteData.about.badgeLabel;
+    const aboutImage = document.querySelector('.about-img');
+    if (aboutImage) {
+      aboutImage.src = appData.about.image || defaultSiteData.about.image;
+      aboutImage.alt = 'Hakkımızda fotoğrafı';
+    }
+    if (aboutText1) aboutText1.innerHTML = appData.about.text1 || defaultSiteData.about.text1;
+    if (aboutText2) aboutText2.innerHTML = appData.about.text2 || defaultSiteData.about.text2;
+    if (aboutSignature) aboutSignature.textContent = appData.about.signature || defaultSiteData.about.signature;
+    if (reservationTag) reservationTag.textContent = appData.site.reservationTag || defaultSiteData.site.reservationTag;
+    if (reservationTitle) reservationTitle.textContent = appData.site.reservationTitle || defaultSiteData.site.reservationTitle;
+    if (reservationText) reservationText.innerHTML = appData.site.reservationText || defaultSiteData.site.reservationText;
+    if (contactTag) contactTag.textContent = appData.site.contactTag || defaultSiteData.site.contactTag;
+    if (contactTitle) contactTitle.innerHTML = appData.site.contactTitle || defaultSiteData.site.contactTitle;
+    if (contactAddress) {
+      const addressText = appData.contact.address || defaultSiteData.contact.address;
+      const addressLink = appData.contact.addressLink || defaultSiteData.contact.addressLink;
+      contactAddress.innerHTML = addressLink
+        ? `<a href="${addressLink}" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">${addressText}</a>`
+        : addressText;
+    }
+    if (contactHours) contactHours.innerHTML = appData.contact.hours || defaultSiteData.contact.hours;
+    const contactPhone = appData.contact.phone || defaultSiteData.contact.phone;
+    const contactEmail = appData.contact.email || defaultSiteData.contact.email;
+    const contactInstagram = appData.contact.instagram || defaultSiteData.contact.instagram;
+    const contactTripadvisor = appData.contact.tripadvisor || defaultSiteData.contact.tripadvisor;
+    const socialText = appData.contact.socialText || 'Instagram · TripAdvisor';
+    const socialLink = appData.contact.socialLink || contactInstagram;
+    if (contactInfo) {
+      contactInfo.innerHTML = `
+        <a href="tel:${contactPhone.replace(/\s+/g, '').replace(/\+/g, '')}">${contactPhone}</a><br><br>
+        <a href="mailto:${contactEmail}">${contactEmail}</a><br><br>
+        <a href="${socialLink}" target="_blank" rel="noopener noreferrer">${socialText}</a>
+      `;
+    }
+
+    const heroBg = document.querySelector('.hero-bg');
+    if (heroBg && appData.site.heroBg) {
+      heroBg.style.background = `linear-gradient(to bottom, rgba(8,8,8,0.55) 0%, rgba(8,8,8,0.25) 50%, rgba(8,8,8,0.75) 100%), url('${appData.site.heroBg}') center/cover no-repeat`;
+    }
+
+    const primaryButton = document.querySelector('.btn-primary');
+    const secondaryButton = document.querySelector('.btn-outline');
+    if (primaryButton) primaryButton.innerHTML = `<span>${appData.site.buttonPrimary || 'Rezervasyon Yap'}</span>`;
+    if (secondaryButton) secondaryButton.textContent = appData.site.buttonSecondary || 'Menüyü Keşfet';
+
+    renderStats();
+  }
+
+  function renderStats() {
+    const statsGrid = document.getElementById('statsGrid');
+    if (!statsGrid) return;
+    statsGrid.innerHTML = (appData.stats || []).map((item, index) => `
+      <div class="stat-item reveal ${index === 0 ? '' : `reveal-delay-${index}`}">
+        <div class="stat-num">${item.value}</div>
+        <div class="stat-label">${item.label}</div>
+      </div>
+    `).join('');
+  }
+
+  function renderMenu() {
+    const menuGrid = document.getElementById('menuGrid');
+    if (!menuGrid) return;
+
+    menuGrid.innerHTML = appData.menuItems.map((item, index) => `
+      <div class="menu-card reveal reveal-delay-${(index % 4) + 1}">
+        <div class="menu-card-img-wrap">
+          <img class="menu-card-img" src="${item.image}" alt="${item.title}" loading="lazy"/>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-category">${item.category}</div>
+          <h3 class="menu-card-title">${item.title}</h3>
+          <p class="menu-card-desc">${item.description}</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">${item.price}</span>
+            <span class="menu-tag">${item.tag}</span>
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+    revealEls.forEach(el => io.observe(el));
+  }
+
+  const adminPasswordKey = 'lucht_admin_password';
+  const adminLoggedKey = 'lucht_admin_logged_in';
+  const defaultAdminPassword = 'admin123';
+  let adminPassword = localStorage.getItem(adminPasswordKey) || defaultAdminPassword;
+
+  function ensureAdminPassword() {
+    localStorage.setItem(adminPasswordKey, adminPassword);
+  }
+
+  function isLoggedIn() {
+    return localStorage.getItem(adminLoggedKey) === 'true';
+  }
+
+  function setLoginState(loggedIn) {
+    localStorage.setItem(adminLoggedKey, loggedIn ? 'true' : 'false');
+    const loginOverlay = document.getElementById('adminLogin');
+    if (loginOverlay) loginOverlay.classList.toggle('hidden', loggedIn);
+  }
+
+  function openAdminPanel() {
+    if (!isLoggedIn()) {
+      const loginOverlay = document.getElementById('adminLogin');
+      if (loginOverlay) loginOverlay.classList.remove('hidden');
+      return;
+    }
+    const panel = document.getElementById('adminPanel');
+    if (panel) panel.classList.add('open');
+  }
+
+  function closeAdminPanel() {
+    const panel = document.getElementById('adminPanel');
+    if (panel) panel.classList.remove('open');
+  }
+
+  function handleAdminLogin() {
+    const passwordInput = document.getElementById('loginPassword');
+    const errorBox = document.getElementById('loginError');
+    const inputValue = passwordInput ? passwordInput.value.trim() : '';
+    if (inputValue === adminPassword) {
+      setLoginState(true);
+      if (passwordInput) passwordInput.value = '';
+      if (errorBox) errorBox.textContent = '';
+      const loginOverlay = document.getElementById('adminLogin');
+      if (loginOverlay) loginOverlay.classList.add('hidden');
+      const panel = document.getElementById('adminPanel');
+      if (panel) panel.classList.add('open');
+      renderAdminPanel();
+    } else {
+      if (errorBox) errorBox.textContent = 'Şifre yanlış. Lütfen tekrar deneyin.';
+    }
+  }
+
+  function handleAdminLogout() {
+    localStorage.setItem(adminLoggedKey, 'false');
+    closeAdminPanel();
+  }
+
+  function renderAdminPanel() {
+    const adminItems = document.getElementById('adminItems');
+    if (!adminItems) return;
+
+    adminItems.innerHTML = `
+      <div class="admin-item">
+        <h4>Gelişmiş Ayarlar</h4>
+        <small>Şifre / görsel / veri taşıma</small>
+        <div class="admin-field">
+          <label>Admin Şifresi</label>
+          <input type="text" id="adminPasswordInput" value="${adminPassword}" />
+        </div>
+        <div class="admin-field">
+          <label>Hero Arka Plan Görseli</label>
+          <input type="url" data-group="site" data-field="heroBg" value="${appData.site.heroBg || ''}" />
+          <input type="file" accept="image/*" data-upload-target="heroBg" style="margin-top:0.5rem;" />
+        </div>
+      </div>
+
+      <div class="admin-item">
+        <h4>Site Bilgileri</h4>
+        <small>Logo / Menü / İsimler</small>
+        <div class="admin-field">
+          <label>Restoran Adı</label>
+          <input type="text" data-group="site" data-field="brandName" value="${appData.site.brandName || ''}" />
+        </div>
+        <div class="admin-field">
+          <label>Alt Başlık</label>
+          <input type="text" data-group="site" data-field="brandTag" value="${appData.site.brandTag || ''}" />
+        </div>
+        <div class="admin-field">
+          <label>Footer Adı</label>
+          <input type="text" data-group="site" data-field="footerBrand" value="${appData.site.footerBrand || ''}" />
+        </div>
+        <div class="admin-field">
+          <label>Nav Menü</label>
+          <input type="text" data-group="site" data-field="navMenu" value="${appData.site.navMenu || ''}" />
+        </div>
+        <div class="admin-field">
+          <label>Nav Hakkımızda</label>
+          <input type="text" data-group="site" data-field="navAbout" value="${appData.site.navAbout || ''}" />
+        </div>
+        <div class="admin-field">
+          <label>Nav Rezervasyon</label>
+          <input type="text" data-group="site" data-field="navReservation" value="${appData.site.navReservation || ''}" />
+        </div>
+        <div class="admin-field">
+          <label>Nav İletişim</label>
+          <input type="text" data-group="site" data-field="navContact" value="${appData.site.navContact || ''}" />
+        </div>
+      </div>
+
+      <div class="admin-item">
+        <h4>Hero Alanı</h4>
+        <small>Arka plan / slogan / butonlar</small>
+        <div class="admin-field">
+          <label>Arka Plan Görsel URL</label>
+          <input type="url" data-group="site" data-field="heroBg" value="${appData.site.heroBg || ''}" />
+        </div>
+        <div class="admin-field">
+          <label>Hero Üst Yazı</label>
+          <input type="text" data-group="site" data-field="heroEyebrow" value="${appData.site.heroEyebrow || ''}" />
+        </div>
+        <div class="admin-field">
+          <label>Hero Başlık</label>
+          <textarea data-group="site" data-field="heroTitle">${appData.site.heroTitle || ''}</textarea>
+        </div>
+        <div class="admin-field">
+          <label>Hero Alt Yazı</label>
+          <input type="text" data-group="site" data-field="heroSub" value="${appData.site.heroSub || ''}" />
+        </div>
+        <div class="admin-field">
+          <label>Birinci Buton</label>
+          <input type="text" data-group="site" data-field="buttonPrimary" value="${appData.site.buttonPrimary || ''}" />
+        </div>
+        <div class="admin-field">
+          <label>İkinci Buton</label>
+          <input type="text" data-group="site" data-field="buttonSecondary" value="${appData.site.buttonSecondary || ''}" />
+        </div>
+      </div>
+
+      <div class="admin-item">
+        <h4>Menü Bölümü</h4>
+        <small>Başlık / etiketler</small>
+        <div class="admin-field">
+          <label>Menü Etiket</label>
+          <input type="text" data-group="site" data-field="menuTag" value="${appData.site.menuTag || ''}" />
+        </div>
+        <div class="admin-field">
+          <label>Menü Başlık</label>
+          <input type="text" data-group="site" data-field="menuTitle" value="${appData.site.menuTitle || ''}" />
+        </div>
+      </div>
+
+      <div class="admin-item">
+        <h4>Hakkımızda</h4>
+        <small>Fotoğraf / metin / imza</small>
+        <div class="admin-field">
+          <label>Fotoğraf URL</label>
+          <input type="url" data-group="about" data-field="image" value="${appData.about.image || ''}" />
+          <input type="file" accept="image/*" data-upload-target="aboutImage" style="margin-top:0.5rem;" />
+        </div>
+        <div class="admin-field">
+          <label>Badge Sayısı</label>
+          <input type="text" data-group="about" data-field="badgeValue" value="${appData.about.badgeValue || ''}" />
+        </div>
+        <div class="admin-field">
+          <label>Badge Etiketi</label>
+          <input type="text" data-group="about" data-field="badgeLabel" value="${appData.about.badgeLabel || ''}" />
+        </div>
+        <div class="admin-field">
+          <label>Başlık Alanı</label>
+          <input type="text" data-group="about" data-field="title" value="${appData.about.title.replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}" />
+        </div>
+        <div class="admin-field">
+          <label>Paragraf 1</label>
+          <textarea data-group="about" data-field="text1">${appData.about.text1}</textarea>
+        </div>
+        <div class="admin-field">
+          <label>Paragraf 2</label>
+          <textarea data-group="about" data-field="text2">${appData.about.text2}</textarea>
+        </div>
+        <div class="admin-field">
+          <label>İmza</label>
+          <input type="text" data-group="about" data-field="signature" value="${appData.about.signature}" />
+        </div>
+      </div>
+
+      <div class="admin-item">
+        <h4>İletişim</h4>
+        <small>Adres / saat / sosyal</small>
+        <div class="admin-field">
+          <label>Adres</label>
+          <textarea data-group="contact" data-field="address">${appData.contact.address}</textarea>
+        </div>
+        <div class="admin-field">
+          <label>Adres Linki</label>
+          <input type="url" data-group="contact" data-field="addressLink" value="${appData.contact.addressLink || ''}" />
+        </div>
+        <div class="admin-field">
+          <label>Çalışma Saatleri</label>
+          <textarea data-group="contact" data-field="hours">${appData.contact.hours}</textarea>
+        </div>
+        <div class="admin-field">
+          <label>Telefon</label>
+          <input type="text" data-group="contact" data-field="phone" value="${appData.contact.phone || ''}" />
+        </div>
+        <div class="admin-field">
+          <label>E-posta</label>
+          <input type="email" data-group="contact" data-field="email" value="${appData.contact.email || ''}" />
+        </div>
+        <div class="admin-field">
+          <label>INSTAGRAM</label>
+          <input type="text" data-group="contact" data-field="socialText" value="${appData.contact.socialText || 'Instagram'}" />
+        </div>
+        <div class="admin-field">
+          <label>Instagram URL</label>
+          <input type="url" data-group="contact" data-field="socialLink" value="${appData.contact.socialLink || appData.contact.instagram || ''}" />
+        </div>
+      </div>
+
+      <div class="admin-item">
+        <h4>İstatistikler</h4>
+        <small>Ödül / deneyim / rakamlar</small>
+        ${(appData.stats || []).map((stat, index) => `
+          <div class="admin-field" data-stat-index="${index}">
+            <label>Rakam ${index + 1}</label>
+            <input type="text" data-group="stats" data-index="${index}" data-field="value" value="${stat.value || ''}" />
+            <label>Etiket ${index + 1}</label>
+            <input type="text" data-group="stats" data-index="${index}" data-field="label" value="${stat.label || ''}" />
+          </div>
+        `).join('')}
+      </div>
+
+      <div class="admin-item">
+        <h4>Rezervasyon</h4>
+        <small>Başlık / açıklama</small>
+        <div class="admin-field">
+          <label>Etiket</label>
+          <input type="text" data-group="site" data-field="reservationTag" value="${appData.site.reservationTag || ''}" />
+        </div>
+        <div class="admin-field">
+          <label>Başlık</label>
+          <input type="text" data-group="site" data-field="reservationTitle" value="${appData.site.reservationTitle || ''}" />
+        </div>
+        <div class="admin-field">
+          <label>Açıklama</label>
+          <textarea data-group="site" data-field="reservationText">${appData.site.reservationText || ''}</textarea>
+        </div>
+      </div>
+
+      <div class="admin-item">
+        <h4>İletişim Bölümü</h4>
+        <small>Başlık / yazı</small>
+        <div class="admin-field">
+          <label>Etiket</label>
+          <input type="text" data-group="site" data-field="contactTag" value="${appData.site.contactTag || ''}" />
+        </div>
+        <div class="admin-field">
+          <label>Başlık</label>
+          <input type="text" data-group="site" data-field="contactTitle" value="${appData.site.contactTitle || ''}" />
+        </div>
+      </div>
+
+      ${appData.menuItems.map((item, index) => `
+        <div class="admin-item menu-editor-item" data-index="${index}">
+          <div class="mini-actions">
+            <button type="button" class="remove-menu-item-btn" data-index="${index}">Sil</button>
+          </div>
+          <h4>Ürün ${index + 1}</h4>
+          <div class="admin-field">
+            <label>Resim URL</label>
+            <input type="url" data-field="image" value="${item.image || ''}" placeholder="https://..." />
+            <input type="file" accept="image/*" data-upload-target="menuImage" data-menu-index="${index}" style="margin-top:0.5rem;" />
+          </div>
+          <div class="admin-field">
+            <label>Kategori</label>
+            <input type="text" data-field="category" value="${item.category || ''}" />
+          </div>
+          <div class="admin-field">
+            <label>Ürün Adı</label>
+            <input type="text" data-field="title" value="${item.title || ''}" />
+          </div>
+          <div class="admin-field">
+            <label>Fiyat</label>
+            <input type="text" data-field="price" value="${item.price || ''}" />
+          </div>
+          <div class="admin-field">
+            <label>Etiket</label>
+            <input type="text" data-field="tag" value="${item.tag || ''}" />
+          </div>
+          <div class="admin-field">
+            <label>Açıklama</label>
+            <textarea data-field="description">${item.description || ''}</textarea>
+          </div>
+        </div>
+      `).join('')}
+    `;
+
+    document.querySelectorAll('.remove-menu-item-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const index = Number(btn.dataset.index);
+        if (appData.menuItems.length > 1) {
+          appData.menuItems.splice(index, 1);
+          renderAdminPanel();
+        } else {
+          alert('En az bir menü öğesi kalmalıdır.');
+        }
+      });
+    });
+
+    document.querySelectorAll('input[data-upload-target]').forEach((input) => {
+      input.addEventListener('change', async (event) => {
+        const file = event.target.files && event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = () => {
+          const value = String(reader.result || '');
+          const target = event.target.dataset.uploadTarget;
+
+          if (target === 'heroBg') {
+            appData.site.heroBg = value;
+            const heroBg = document.querySelector('.hero-bg');
+            if (heroBg) {
+              heroBg.style.background = `linear-gradient(to bottom, rgba(8,8,8,0.55) 0%, rgba(8,8,8,0.25) 50%, rgba(8,8,8,0.75) 100%), url('${value}') center/cover no-repeat`;
+            }
+          }
+
+          if (target === 'aboutImage') {
+            appData.about.image = value;
+          }
+
+          if (target === 'menuImage') {
+            const menuIndex = Number(event.target.dataset.menuIndex);
+            if (!Number.isNaN(menuIndex) && appData.menuItems[menuIndex]) {
+              appData.menuItems[menuIndex].image = value;
+            }
+          }
+
+          saveAppData();
+          renderPageData();
+          renderMenu();
+          renderAdminPanel();
+        };
+
+        reader.readAsDataURL(file);
+      });
+    });
+  }
+
+  function downloadAppDataAsJson() {
+    const blob = new Blob([JSON.stringify(appData, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'lucht-site-data.json';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  function importAppDataFromJson(event) {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const nextData = JSON.parse(String(reader.result || '{}'));
+        appData = normalizeAppData(nextData);
+        saveAppData();
+        renderPageData();
+        renderMenu();
+        renderAdminPanel();
+        alert('İçe aktarma başarılı.');
+      } catch (error) {
+        console.error('Invalid import JSON', error);
+        alert('Geçersiz JSON dosyası. Lütfen doğru dosyayı seçin.');
+      } finally {
+        event.target.value = '';
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  function readAdminForm() {
+    const settings = { site: {}, about: {}, contact: {}, stats: {} };
+    document.querySelectorAll('[data-group]').forEach((field) => {
+      const group = field.dataset.group;
+      const key = field.dataset.field;
+      if (!settings[group]) settings[group] = {};
+      if (group === 'stats') {
+        const index = field.dataset.index;
+        if (!settings.stats[index]) settings.stats[index] = {};
+        settings.stats[index][key] = field.value.trim();
+      } else {
+        settings[group][key] = field.value.trim();
+      }
+    });
+
+    const menuItemsFromForm = [...document.querySelectorAll('.menu-editor-item')].map((itemEl) => {
+      const fields = itemEl.querySelectorAll('[data-field]');
+      const data = {};
+      fields.forEach((field) => {
+        data[field.dataset.field] = field.value.trim();
+      });
+      return data;
+    });
+
+    return { settings, menuItemsFromForm };
+  }
+
+  async function applyMenuChanges() {
+    const passwordField = document.getElementById('adminPasswordInput');
+    if (passwordField && passwordField.value.trim()) {
+      adminPassword = passwordField.value.trim();
+      ensureAdminPassword();
+    }
+
+    const { settings, menuItemsFromForm } = readAdminForm();
+
+    appData.site = {
+      brandName: settings.site.brandName || 'Lucht',
+      brandTag: settings.site.brandTag || 'Gastronomy',
+      footerBrand: settings.site.footerBrand || 'Lucht Gastronomy',
+      navMenu: settings.site.navMenu || 'Menü',
+      navAbout: settings.site.navAbout || 'Hikayemiz',
+      navReservation: settings.site.navReservation || 'Rezervasyon',
+      navContact: settings.site.navContact || 'İletişim',
+      heroBg: settings.site.heroBg || 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1800&q=80',
+      heroEyebrow: settings.site.heroEyebrow || 'Bursa · 2018\'den Beri',
+      heroTitle: settings.site.heroTitle || 'Lezzetin<br><em>Modern</em> Yüzü',
+      heroSub: settings.site.heroSub || 'Anadolu\'nun Özü, Dünya\'nın Ruhu',
+      buttonPrimary: settings.site.buttonPrimary || 'Rezervasyon Yap',
+      buttonSecondary: settings.site.buttonSecondary || 'Menüyü Keşfet',
+      menuTag: settings.site.menuTag || 'Öne Çıkan Lezzetler',
+      menuTitle: settings.site.menuTitle || 'Şefin Seçkisi',
+      aboutTag: settings.site.aboutTag || 'Hakkımızda',
+      aboutTitle: settings.site.aboutTitle || 'Mutfak Bir<br>Manifestodur',
+      reservationTag: settings.site.reservationTag || 'Masa Ayırt',
+      reservationTitle: settings.site.reservationTitle || 'Hızlı Rezervasyon',
+      reservationText: settings.site.reservationText || 'Özel anlarınız için masanızı şimdiden ayırtın.<br>24 saat içinde onay mesajı alacaksınız.',
+      contactTag: settings.site.contactTag || 'Bize Ulaşın',
+      contactTitle: settings.site.contactTitle || 'İletişim &amp; Konum'
+    };
+
+    appData.about = {
+      title: settings.about.title || 'Mutfak Bir<br>Manifestodur',
+      image: settings.about.image || defaultSiteData.about.image,
+      badgeValue: settings.about.badgeValue || defaultSiteData.about.badgeValue,
+      badgeLabel: settings.about.badgeLabel || defaultSiteData.about.badgeLabel,
+      text1: settings.about.text1 || 'Açıklama ekleyin.',
+      text2: settings.about.text2 || 'Açıklama ekleyin.',
+      signature: settings.about.signature || 'Baş Şef'
+    };
+
+    appData.contact = {
+      address: settings.contact.address || 'Adres bilgisi ekleyin.',
+      addressLink: settings.contact.addressLink || defaultSiteData.contact.addressLink,
+      hours: settings.contact.hours || 'Çalışma saatleri ekleyin.',
+      phone: settings.contact.phone || defaultSiteData.contact.phone,
+      email: settings.contact.email || defaultSiteData.contact.email,
+      instagram: settings.contact.instagram || defaultSiteData.contact.instagram,
+      tripadvisor: settings.contact.tripadvisor || defaultSiteData.contact.tripadvisor,
+      socialText: settings.contact.socialText || defaultSiteData.contact.socialText,
+      socialLink: settings.contact.socialLink || settings.contact.instagram || defaultSiteData.contact.socialLink,
+      info: settings.contact.info || defaultSiteData.contact.info
+    };
+
+    const nextStats = Object.keys(settings.stats || {}).map((key) => ({
+      value: settings.stats[key].value || '0',
+      label: settings.stats[key].label || 'Etiket'
+    }));
+    appData.stats = nextStats.length ? nextStats : defaultSiteData.stats;
+
+    appData.menuItems = menuItemsFromForm.map((item) => ({
+      category: item.category || 'Kategori',
+      title: item.title || 'Ürün Adı',
+      description: item.description || 'Açıklama ekleyin.',
+      price: item.price || '₺0',
+      tag: item.tag || 'Öne Çıkan',
+      image: item.image || 'https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80'
+    }));
+
+    saveAppData();
+    await saveAppDataToFirestore();
+    renderPageData();
+    renderMenu();
+    closeAdminPanel();
+  }
+
+  function addMenuItem() {
+    appData.menuItems.push({
+      category: 'Yeni Kategori',
+      title: 'Yeni Ürün',
+      description: 'Yeni ürün açıklaması ekleyin.',
+      price: '₺0',
+      tag: 'Yeni',
+      image: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80'
+    });
+    renderAdminPanel();
+  }
+
+  async function resetData() {
+    appData = {
+      site: JSON.parse(JSON.stringify(defaultSiteData.site)),
+      about: JSON.parse(JSON.stringify(defaultSiteData.about)),
+      contact: JSON.parse(JSON.stringify(defaultSiteData.contact)),
+      stats: JSON.parse(JSON.stringify(defaultSiteData.stats)),
+      menuItems: JSON.parse(JSON.stringify(defaultMenuItems))
+    };
+    saveAppData();
+    await saveAppDataToFirestore();
+    renderPageData();
+    renderMenu();
+    renderAdminPanel();
+  }
+
+  /* Navbar scroll */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  /* Scroll reveal */
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+  revealEls.forEach(el => io.observe(el));
+
+  /* Smooth scroll */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) t.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  document.getElementById('adminFooterToggle').addEventListener('click', openAdminPanel);
+  document.getElementById('adminClose').addEventListener('click', closeAdminPanel);
+  document.getElementById('loginBtn').addEventListener('click', handleAdminLogin);
+  document.getElementById('loginPassword').addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') handleAdminLogin();
+  });
+  
+  // Event listeners for actions mapped perfectly to our new HTML layout
+  document.getElementById('saveMenuBtn').addEventListener('click', applyMenuChanges);
+  document.getElementById('resetMenuBtn').addEventListener('click', resetData);
+  document.getElementById('addMenuItemBtn').addEventListener('click', addMenuItem);
+  document.getElementById('logoutBtn').addEventListener('click', handleAdminLogout);
+  document.getElementById('exportDataBtn').addEventListener('click', downloadAppDataAsJson);
+  document.getElementById('importDataBtn').addEventListener('click', () => document.getElementById('importDataInput').click());
+  document.getElementById('importDataInput').addEventListener('change', importAppDataFromJson);
+
+  ensureAdminPassword();
+  function startRemoteDataSync() {
+    loadRemoteAppData();
+    subscribeToFirestoreData();
+  }
+
+  if (window.siteDataDocRef) {
+    startRemoteDataSync();
+  } else {
+    window.addEventListener('firebase-ready', startRemoteDataSync, { once: true });
+  }
+  renderPageData();
+  renderMenu();
+  renderAdminPanel();
+
+  const dateInput = document.getElementById('date');
+  const timeInput = document.getElementById('time');
+  const timePickerBox = document.getElementById('timePickerBox');
+  const timePickerMenu = document.getElementById('timePickerMenu');
+  const timePickerValue = document.getElementById('timePickerValue');
+  let selectedHour = '00';
+  let selectedMinute = '00';
+
+  flatpickr('#date', {
+    locale: 'tr',
+    dateFormat: 'd/m/Y',
+    allowInput: false,
+    minDate: 'today',
+    monthSelectorType: 'static',
+    disableMobile: true,
+    clickOpens: true,
+    onReady: function () {
+      if (dateInput) {
+        dateInput.placeholder = 'gg/aa/yyyy';
+        dateInput.setAttribute('readonly', 'readonly');
+        dateInput.setAttribute('inputmode', 'none');
+      }
+    }
+  });
+
+  if (dateInput) {
+    dateInput.addEventListener('click', () => {
+      if (dateInput._flatpickr) {
+        dateInput._flatpickr.open();
+      }
+    });
+  }
+
+  function updateTimeSelection(nextHour = selectedHour, nextMinute = selectedMinute) {
+    selectedHour = nextHour;
+    selectedMinute = nextMinute;
+
+    if (timeInput && timePickerValue) {
+      const finalValue = `${selectedHour}:${selectedMinute}`;
+      timeInput.value = finalValue;
+      timePickerValue.textContent = finalValue;
+      timePickerValue.style.color = '#f5efe7';
+      timePickerBox.classList.add('active');
+    }
+
+    document.querySelectorAll('.time-picker-option[data-hour]').forEach((button) => {
+      button.classList.toggle('selected', button.dataset.hour === selectedHour);
+    });
+
+    document.querySelectorAll('.time-picker-option[data-minute]').forEach((button) => {
+      button.classList.toggle('selected', button.dataset.minute === selectedMinute);
+    });
+  }
+
+  if (timePickerBox && timePickerMenu && timeInput && timePickerValue) {
+    timePickerBox.addEventListener('click', () => {
+      timePickerMenu.classList.toggle('hidden');
+    });
+
+    timePickerBox.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        timePickerMenu.classList.toggle('hidden');
+      }
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest('.time-picker')) {
+        timePickerMenu.classList.add('hidden');
+      }
+    });
+
+    document.querySelectorAll('.time-picker-option[data-hour]').forEach((button) => {
+      button.addEventListener('click', () => {
+        updateTimeSelection(button.dataset.hour, selectedMinute);
+        timePickerMenu.classList.add('hidden');
+      });
+    });
+
+    document.querySelectorAll('.time-picker-option[data-minute]').forEach((button) => {
+      button.addEventListener('click', () => {
+        updateTimeSelection(selectedHour, button.dataset.minute);
+        timePickerMenu.classList.add('hidden');
+      });
+    });
+
+    timePickerValue.textContent = '00:00';
+    timePickerValue.style.color = '#7d7d7d';
+    timePickerBox.classList.remove('active');
+  }
+
+  function showReservationModal() {
+    const modal = document.getElementById('reservationModalOverlay');
+    if (modal) {
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+  }
+
+  function closeReservationModal() {
+    const modal = document.getElementById('reservationModalOverlay');
+    if (modal) {
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  /* Reservation */
+  function handleReservation() {
+    const name = document.getElementById('name')?.value.trim();
+    const phone = document.getElementById('phone')?.value.trim();
+    const date = document.getElementById('date')?.value;
+    const time = document.getElementById('time')?.value;
+    const guests = document.getElementById('guests')?.value;
+
+    if (!name || !phone || !date || !time || !guests) {
+      alert('Lütfen tüm alanları doldurunuz.');
+      return;
+    }
+
+    const templateParams = {
+      from_name: name,
+      phone: phone,
+      date: date,
+      time: time,
+      guests: guests,
+      message: `Rezervasyon talebi: ${name} - ${phone} - ${date} ${time} - ${guests}`
+    };
+
+    emailjs.send('service_5is3xrr', 'template_297xw4k', templateParams)
+      .then(function () {
+        showReservationModal();
+        document.getElementById('name').value = '';
+        document.getElementById('phone').value = '';
+        document.getElementById('date').value = '';
+        document.getElementById('time').value = '';
+        document.getElementById('guests').value = '';
+        updateTimeSelection('00', '00');
+      })
+      .catch(function (error) {
+        alert('Rezervasyon gönderilirken bir hata oluştu. Lütfen tekrar deneyiniz.');
+        console.error('EmailJS Error:', error);
+      });
+  }
+</script>
+
+
+</body>
+</html>
