@@ -13,6 +13,31 @@
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/tr.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDGYVKpi4wfz77CN0Isx6TsHQhJ3prpOI",
+      authDomain: "restoran-site-bdc62.firebaseapp.com",
+      projectId: "restoran-site-bdc62",
+      storageBucket: "restoran-site-bdc62.firebasestorage.app",
+      messagingSenderId: "753753557524",
+      appId: "1:753753557524:web:9381dbb506daac22a6f501",
+      measurementId: "G-XRHJFM6CF0"
+    };
+
+    const firebaseApp = initializeApp(firebaseConfig);
+    const firebaseDb = getFirestore(firebaseApp);
+    const siteDataDocRef = doc(firebaseDb, "siteData", "main");
+
+    window.firebaseDb = firebaseDb;
+    window.siteDataDocRef = siteDataDocRef;
+    window.firebaseGetDoc = getDoc;
+    window.firebaseSetDoc = setDoc;
+    window.firebaseOnSnapshot = onSnapshot;
+    window.dispatchEvent(new Event('firebase-ready'));
+  </script>
   <script type="text/javascript">
     (function () {
       emailjs.init({
@@ -348,20 +373,7 @@
       font-size: 1.7rem;
       box-shadow: inset 0 0 0 1px rgba(77, 209, 122, 0.35);
     }
-    .reservation-modal-warning {
-      width: 56px;
-      height: 56px;
-      margin: 0 auto 1rem;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      background: rgba(212,175,55,0.12);
-      border: 1px solid rgba(212,175,55,0.5);
-      color: var(--gold);
-      font-size: 1.45rem;
-      font-weight: 600;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.24);
-    }
+    .reservation-modal-warning { width: 56px; height: 56px; margin: 0 auto 1rem; border-radius: 50%; display: grid; place-items: center; background: rgba(212,175,55,0.12); border: 1px solid rgba(212,175,55,0.5); color: var(--gold); font-size: 1.45rem; font-weight: 600; box-shadow: 0 8px 24px rgba(0,0,0,0.24); }
     .reservation-modal-body h3 {
       margin: 0 0 0.5rem;
       color: #f5efe7;
@@ -396,30 +408,6 @@
       border-color: rgba(212,175,55,0.7);
       box-shadow: 0 0 0 1px rgba(212,175,55,0.12);
     }
-    .privacy-modal {
-      width: min(720px, 100%);
-      max-height: min(82vh, 760px);
-      overflow-y: auto;
-      background: #111;
-      border: 1px solid rgba(212,175,55,0.35);
-      border-radius: 10px;
-      box-shadow: 0 28px 80px rgba(0,0,0,0.62), inset 0 1px 0 rgba(255,255,255,0.05);
-      padding: 2rem 2.2rem;
-      animation: modalFadeUp 0.25s ease;
-    }
-    .privacy-modal::-webkit-scrollbar { width: 5px; }
-    .privacy-modal::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.55); }
-    .privacy-modal-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding-bottom: 1.2rem; border-bottom: 1px solid rgba(212,175,55,0.18); }
-    .privacy-modal-title { font-family: 'Playfair Display', serif; font-size: clamp(1.7rem, 4vw, 2.4rem); color: #f5efe7; line-height: 1.15; }
-    .privacy-modal-date { color: var(--gold); font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; margin-top: 0.55rem; }
-    .privacy-modal-close { border: 0; background: transparent; color: #c9c0b6; font-size: 1.7rem; cursor: pointer; line-height: 1; padding: 0.1rem; }
-    .privacy-modal-close:hover { color: var(--gold); }
-    .privacy-modal-body { padding-top: 1.4rem; }
-    .privacy-modal-body h3 { color: var(--gold); font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; margin: 1.35rem 0 0.45rem; }
-    .privacy-modal-body h3:first-child { margin-top: 0; }
-    .privacy-modal-body p { color: #c2b8ac; font-family: 'Cormorant Garamond', serif; font-size: 1.08rem; line-height: 1.65; }
-    .privacy-modal-body a { color: var(--gold); text-decoration: none; }
-    .privacy-modal-body a:hover { text-decoration: underline; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
     .form-group { display: flex; flex-direction: column; gap: 0.45rem; }
     .form-group label { font-size: 0.58rem; letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold); }
@@ -612,34 +600,10 @@
     }
 
     .form-note { font-size: 0.72rem; color: #484848; margin-top: 1.5rem; letter-spacing: 0.04em; line-height: 1.6; }
-    .privacy-consent {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.55rem;
-      margin: 0 0 1rem;
-      color: #81786f;
-      font-size: 0.68rem;
-      line-height: 1.5;
-      text-align: left;
-    }
-    .privacy-consent input {
-      flex: 0 0 auto;
-      width: 0.95rem;
-      height: 0.95rem;
-      margin-top: 0.1rem;
-      accent-color: var(--gold);
-      cursor: pointer;
-    }
+    .privacy-consent { display: flex; align-items: flex-start; gap: 0.55rem; margin: 0 0 1rem; color: #81786f; font-size: 0.68rem; line-height: 1.5; text-align: left; }
+    .privacy-consent input { flex: 0 0 auto; width: 0.95rem; height: 0.95rem; margin-top: 0.1rem; accent-color: var(--gold); cursor: pointer; }
     .privacy-consent label { cursor: pointer; }
-    .privacy-consent button {
-      padding: 0;
-      border: 0;
-      background: transparent;
-      color: var(--gold);
-      text-decoration: underline;
-      cursor: pointer;
-      font: inherit;
-    }
+    .privacy-consent button { padding: 0; border: 0; background: transparent; color: var(--gold); text-decoration: underline; cursor: pointer; font: inherit; }
     .btn-submit {
       width: 100%; padding: 1rem; border: none; cursor: pointer;
       background: var(--gold); color: var(--anthracite);
@@ -664,75 +628,51 @@
       font-size: 0.6rem; letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem;
     }
     .contact-card p { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: #b8aea2; line-height: 1.85; }
-    .contact-card a { color: #b8aea2; text-decoration: none; transition: color 0.3s; }
-    .contact-card a:hover { color: var(--gold); }
+    .contact-card a {
+      color: #7a7068;
+      text-decoration: none;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    .contact-card a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 100%;
+      height: 1px;
+      background: rgba(212,175,55,0.7);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.25s ease;
+    }
+    .contact-card a:hover {
+      color: var(--gold);
+    }
+    .contact-card a:hover::after {
+      transform: scaleX(1);
+    }
+    #contactAddress {
+      transition: color 0.3s ease;
+    }
+    #contactAddress:hover {
+      color: var(--gold);
+    }
     #contactAddress a {
       color: inherit;
-      text-decoration: none;
       transition: color 0.3s ease;
     }
     #contactAddress a:hover {
       color: var(--gold) !important;
     }
-    .contact-map {
-      display: block;
-      width: 100%;
-      max-width: 250px;
-      height: 140px;
-      filter: grayscale(0.35) contrast(1.05) brightness(0.78);
-    }
-    .contact-map-frame {
-      position: relative;
-      width: fit-content;
-      max-width: 100%;
-      margin-top: 1.5rem;
-      padding: 0.6rem;
-      background: #070707;
-      border: 2px solid #000;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 14px 30px rgba(0,0,0,0.48), inset 0 0 0 1px rgba(212,175,55,0.18);
-    }
-    .contact-map-frame::after {
-      content: '';
-      position: absolute;
-      inset: 0.28rem;
-      border: 1px solid rgba(212,175,55,0.42);
-      border-radius: 8px;
-      pointer-events: none;
-    }
-    .contact-map { border-radius: 6px; }
-    .contact-detail {
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-      min-height: 1.7rem;
-    }
-    .contact-detail-icon {
-      display: inline-flex;
-      flex: 0 0 1.55rem;
-      width: 1.55rem;
-      height: 1.55rem;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid rgba(212,175,55,0.52);
-      border-radius: 6px;
-      background: rgba(212,175,55,0.1);
-      color: var(--gold);
-      line-height: 1;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04), 0 4px 10px rgba(0,0,0,0.18);
-      transition: background 0.3s ease, transform 0.3s ease;
-    }
+    .contact-map { display: block; width: 250px; max-width: 100%; height: 140px; filter: grayscale(0.35) contrast(1.05) brightness(0.78); border-radius: 6px; }
+    .contact-map-frame { position: relative; width: fit-content; max-width: 100%; margin-top: 1.5rem; padding: 0.6rem; background: #070707; border: 2px solid #000; border-radius: 12px; overflow: hidden; box-shadow: 0 14px 30px rgba(0,0,0,0.48), inset 0 0 0 1px rgba(212,175,55,0.18); }
+    .contact-map-frame::after { content: ''; position: absolute; inset: 0.28rem; border: 1px solid rgba(212,175,55,0.42); border-radius: 8px; pointer-events: none; }
+    .contact-detail { display: flex; align-items: center; gap: 0.65rem; min-height: 1.7rem; }
+    .contact-detail-icon { display: inline-flex; flex: 0 0 1.55rem; width: 1.55rem; height: 1.55rem; align-items: center; justify-content: center; border: 1px solid rgba(212,175,55,0.52); border-radius: 6px; background: rgba(212,175,55,0.1); color: var(--gold); line-height: 1; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04), 0 4px 10px rgba(0,0,0,0.18); transition: background 0.3s ease, transform 0.3s ease; }
     .contact-detail-icon i { font-size: 0.75rem; }
-    .contact-detail:hover .contact-detail-icon {
-      background: rgba(212,175,55,0.2);
-      transform: translateY(-1px);
-    }
-    #contactInfo {
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-    }
+    .contact-detail:hover .contact-detail-icon { background: rgba(212,175,55,0.2); transform: translateY(-1px); }
+    #contactInfo { display: flex; flex-direction: column; gap: 0.85rem; }
     #contactInfo br { display: none; }
 
     /* ─── FOOTER ─── */
@@ -813,18 +753,23 @@
     .admin-field input:focus, .admin-field textarea:focus { border-color: var(--gold); }
     .admin-field textarea { min-height: 80px; resize: vertical; }
     .theme-swatches { display: flex; flex-wrap: wrap; gap: 0.55rem; }
-    .theme-swatch {
-      width: 2rem;
-      height: 2rem;
-      padding: 0;
-      border: 2px solid transparent;
-      border-radius: 50%;
-      cursor: pointer;
-      box-shadow: 0 0 0 1px rgba(255,255,255,0.12);
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
+    .theme-swatch { width: 2rem; height: 2rem; padding: 0; border: 2px solid transparent; border-radius: 50%; cursor: pointer; box-shadow: 0 0 0 1px rgba(255,255,255,0.12); transition: transform 0.2s ease, border-color 0.2s ease; }
     .theme-swatch:hover { transform: translateY(-2px); }
     .theme-swatch.active { border-color: #fff; box-shadow: 0 0 0 2px var(--gold); }
+    .privacy-modal { width: min(720px, 100%); max-height: min(82vh, 760px); overflow-y: auto; background: #111; border: 1px solid rgba(212,175,55,0.35); border-radius: 10px; box-shadow: 0 28px 80px rgba(0,0,0,0.62), inset 0 1px 0 rgba(255,255,255,0.05); padding: 2rem 2.2rem; animation: modalFadeUp 0.25s ease; }
+    .privacy-modal::-webkit-scrollbar { width: 5px; }
+    .privacy-modal::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.55); }
+    .privacy-modal-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding-bottom: 1.2rem; border-bottom: 1px solid rgba(212,175,55,0.18); }
+    .privacy-modal-title { font-family: 'Playfair Display', serif; font-size: clamp(1.7rem, 4vw, 2.4rem); color: #f5efe7; line-height: 1.15; }
+    .privacy-modal-date { color: var(--gold); font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; margin-top: 0.55rem; }
+    .privacy-modal-close { border: 0; background: transparent; color: #c9c0b6; font-size: 1.7rem; cursor: pointer; line-height: 1; padding: 0.1rem; }
+    .privacy-modal-close:hover { color: var(--gold); }
+    .privacy-modal-body { padding-top: 1.4rem; }
+    .privacy-modal-body h3 { color: var(--gold); font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; margin: 1.35rem 0 0.45rem; }
+    .privacy-modal-body h3:first-child { margin-top: 0; }
+    .privacy-modal-body p { color: #c2b8ac; font-family: 'Cormorant Garamond', serif; font-size: 1.08rem; line-height: 1.65; }
+    .privacy-modal-body a { color: var(--gold); text-decoration: none; }
+    .privacy-modal-body a:hover { text-decoration: underline; }
 
     /* ─── Keyframes ─── */
     @keyframes fadeUp {
@@ -913,14 +858,10 @@
       .about-signature { flex-wrap: wrap; }
       .about-signature-name { font-size: 0.9rem; }
       .contact-card, .contact-card-title, .contact-card p { word-break: break-word; }
-      .contact-map-frame { width: fit-content; }
-      .contact-map { width: 250px; max-width: 100%; height: 140px; }
       .footer-links { flex-wrap: wrap; gap: 0.75rem 1.25rem; }
       .admin-login-box { width: min(90vw, 320px); }
       .reservation-modal { padding: 1rem; }
       .reservation-modal-body h3 { font-size: 1.8rem; }
-      .privacy-modal { max-height: 88vh; padding: 1.4rem 1.15rem; }
-      .privacy-modal-body p { font-size: 1rem; }
       .time-picker-menu { grid-template-columns: 1fr 1fr; }
       .time-picker-column { max-height: 180px; }
       .time-picker-box { letter-spacing: 0.04em; }
@@ -1253,15 +1194,7 @@
           Bursa, Türkiye 16110
         </p>
         <div class="contact-map-frame">
-          <iframe
-            id="contactMap"
-            class="contact-map"
-            title="Lucht Gastronomy konum haritası"
-            loading="lazy"
-            allowfullscreen
-            referrerpolicy="no-referrer-when-downgrade"
-            src="https://www.google.com/maps?q=Nil%C3%BCfer%2C%20%C3%96zl%C3%BCce%20Mahallesi%2C%20Be%C5%9Fevler%20Cad.%20No%3A%2042%2C%20Bursa%2C%20T%C3%BCrkiye%2016110&amp;output=embed">
-          </iframe>
+          <iframe id="contactMap" class="contact-map" title="Lucht Gastronomy konum haritası" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Nil%C3%BCfer%2C%20%C3%96zl%C3%BCce%20Mahallesi%2C%20Be%C5%9Fevler%20Cad.%20No%3A%2042%2C%20Bursa%2C%20T%C3%BCrkiye%2016110&amp;output=embed"></iframe>
         </div>
       </div>
       <div class="contact-card reveal reveal-delay-2">
@@ -1307,47 +1240,25 @@
 
 <div id="reservationErrorModalOverlay" class="reservation-modal-overlay" aria-hidden="true" onclick="handleReservationErrorOverlayClick(event)">
   <div class="reservation-modal" role="alertdialog" aria-modal="true" aria-labelledby="reservationErrorTitle">
-    <div class="reservation-modal-header">
-      <div id="reservationErrorTitle" class="reservation-modal-title">Rezervasyon Bilgileri</div>
-      <button type="button" class="reservation-modal-close" aria-label="Uyarıyı kapat" onclick="closeReservationErrorModal()">×</button>
-    </div>
-    <div class="reservation-modal-body">
-      <div class="reservation-modal-warning">!</div>
-      <h3>Eksik bilgi var</h3>
-      <p id="reservationErrorMessage">Lütfen rezervasyon formundaki tüm alanları doldurunuz.</p>
-    </div>
-    <div class="reservation-modal-footer">
-      <button type="button" class="reservation-modal-btn" onclick="closeReservationErrorModal()">Tamam</button>
-    </div>
+    <div class="reservation-modal-header"><div id="reservationErrorTitle" class="reservation-modal-title">Rezervasyon Bilgileri</div><button type="button" class="reservation-modal-close" aria-label="Uyarıyı kapat" onclick="closeReservationErrorModal()">×</button></div>
+    <div class="reservation-modal-body"><div class="reservation-modal-warning">!</div><h3>Eksik bilgi var</h3><p id="reservationErrorMessage">Lütfen rezervasyon formundaki tüm alanları doldurunuz.</p></div>
+    <div class="reservation-modal-footer"><button type="button" class="reservation-modal-btn" onclick="closeReservationErrorModal()">Tamam</button></div>
   </div>
 </div>
 
 <div id="privacyModalOverlay" class="reservation-modal-overlay" aria-hidden="true" onclick="handlePrivacyOverlayClick(event)">
   <div class="privacy-modal" role="dialog" aria-modal="true" aria-labelledby="privacyModalTitle">
-    <div class="privacy-modal-header">
-      <div>
-        <h2 id="privacyModalTitle" class="privacy-modal-title">Gizlilik Politikası</h2>
-        <div class="privacy-modal-date">Son güncelleme: 20 Eylül 2026</div>
-      </div>
-      <button type="button" class="privacy-modal-close" aria-label="Gizlilik politikasını kapat" onclick="closePrivacyModal()">×</button>
-    </div>
+    <div class="privacy-modal-header"><div><h2 id="privacyModalTitle" class="privacy-modal-title">Gizlilik Politikası</h2><div class="privacy-modal-date">Son güncelleme: 20 Eylül 2026</div></div><button type="button" class="privacy-modal-close" aria-label="Gizlilik politikasını kapat" onclick="closePrivacyModal()">×</button></div>
     <div class="privacy-modal-body">
       <h3>1. Veri Sorumlusu</h3>
       <p>Bu metin, <span id="privacyControllerName">Lucht Gastronomy</span> tarafından, 6698 sayılı Kişisel Verilerin Korunması Kanunu (KVKK) kapsamında hazırlanmıştır. Veri sorumlusu iletişim bilgileri: <span id="privacyControllerAddress">Nilüfer, Özlüce Mah., Beşevler Cad. No: 42, Bursa, Türkiye 16110</span>. İletişim: <a id="privacyContactEmail" href="mailto:rezervasyon@luchtgastronomy.com">rezervasyon@luchtgastronomy.com</a> · <span id="privacyControllerPhone">+90 (224) 222 00 42</span>.</p>
-      <h3>2. İşlenen Kişisel Veriler</h3>
-      <p>Rezervasyon talebi sırasında kimlik bilgisi olarak ad-soyad; iletişim bilgisi olarak telefon ve e-posta; rezervasyon bilgisi olarak tarih, saat ve kişi sayısı işlenebilir. Site kullanımı sırasında teknik bilgiler ve zorunlu çerez tercihleri de işlenebilir.</p>
-      <h3>3. İşleme Amaçları</h3>
-      <p>Verileriniz; rezervasyon talebini almak ve yönetmek, talebiniz hakkında sizinle iletişime geçmek, hizmet sunmak, müşteri taleplerini yanıtlamak, bilgi güvenliğini sağlamak ve mevzuattan doğan yükümlülükleri yerine getirmek amacıyla işlenir.</p>
-      <h3>4. Hukuki Sebep</h3>
-      <p>Kişisel verileriniz, KVKK'nın 5. maddesinde düzenlenen; sözleşmenin kurulması veya ifası için gerekli olma, hukuki yükümlülüğün yerine getirilmesi ve meşru menfaat hukuki sebeplerine dayanılarak işlenir. Pazarlama iletişimi için ayrıca gerekli izin alınır; rezervasyon formu pazarlama izni vermez.</p>
-      <h3>5. Toplama Yöntemi ve Aktarım</h3>
-      <p>Verileriniz web sitemizdeki rezervasyon formu, e-posta, telefon ve iletişim kanalları üzerinden otomatik veya kısmen otomatik yöntemlerle toplanır. Rezervasyonun yürütülmesi için yetkili hizmet sağlayıcılarla ve yasal zorunluluk halinde yetkili kamu kurumlarıyla, amaçla sınırlı ve gerekli ölçüde paylaşılabilir.</p>
-      <h3>6. Saklama ve Güvenlik</h3>
-      <p>Verileriniz, işleme amacının gerektirdiği süre ve ilgili mevzuatta öngörülen zamanaşımı süreleri boyunca saklanır; süre sonunda silinir, yok edilir veya anonim hale getirilir. Yetkisiz erişim, kayıp ve kötüye kullanıma karşı makul teknik ve idari tedbirler uygulanır.</p>
-      <h3>7. KVKK Kapsamındaki Haklarınız</h3>
-      <p>KVKK'nın 11. maddesi kapsamında kişisel verilerinizin işlenip işlenmediğini öğrenme, bilgi talep etme, düzeltme, silme veya yok etme, aktarılan üçüncü kişileri bilme, işleme sonucuna itiraz etme ve zararınızın giderilmesini talep etme haklarına sahipsiniz. Taleplerinizi <a id="privacyRightsEmail" href="mailto:rezervasyon@luchtgastronomy.com">rezervasyon@luchtgastronomy.com</a> adresine iletebilirsiniz.</p>
-      <h3>8. Çerezler ve Güncellemeler</h3>
-      <p>Sitemiz temel işlevler ve yönetim paneli tercihleri için zorunlu tarayıcı depolaması kullanabilir. Tarayıcı ayarlarınızdan çerez tercihlerinizi yönetebilirsiniz. Bu metin, hizmetlerimiz veya mevzuat değiştikçe güncellenebilir; güncel sürüm bu pencerede yayımlanır.</p>
+      <h3>2. İşlenen Kişisel Veriler</h3><p>Rezervasyon talebi sırasında ad-soyad, telefon, e-posta, tarih, saat ve kişi sayısı bilgileri işlenebilir.</p>
+      <h3>3. İşleme Amaçları</h3><p>Verileriniz; rezervasyon talebini almak ve yönetmek, sizinle iletişime geçmek, hizmet sunmak ve yasal yükümlülükleri yerine getirmek amacıyla işlenir.</p>
+      <h3>4. Hukuki Sebep</h3><p>Verileriniz, KVKK'nın 5. maddesinde düzenlenen sözleşmenin kurulması veya ifası, hukuki yükümlülük ve meşru menfaat hukuki sebeplerine dayanılarak işlenir. Pazarlama iletişimi için ayrıca gerekli izin alınır.</p>
+      <h3>5. Toplama ve Aktarım</h3><p>Verileriniz web sitesi, e-posta ve telefon üzerinden toplanır; rezervasyonun yürütülmesi için gerekli hizmet sağlayıcılarla ve yasal zorunluluk halinde yetkili kurumlarla paylaşılabilir.</p>
+      <h3>6. Saklama ve Güvenlik</h3><p>Verileriniz, işleme amacının gerektirdiği süre ve ilgili mevzuatta öngörülen süreler boyunca saklanır; süre sonunda silinir, yok edilir veya anonim hale getirilir.</p>
+      <h3>7. Haklarınız</h3><p>KVKK'nın 11. maddesi kapsamında bilgi talep etme, düzeltme, silme, yok etme ve itiraz etme haklarına sahipsiniz. Taleplerinizi <a id="privacyRightsEmail" href="mailto:rezervasyon@luchtgastronomy.com">rezervasyon@luchtgastronomy.com</a> adresine iletebilirsiniz.</p>
+      <h3>8. Çerezler</h3><p>Sitemiz temel işlevler ve yönetim paneli tercihleri için zorunlu tarayıcı depolaması kullanabilir. Bu metin hizmetlerimiz veya mevzuat değiştikçe güncellenebilir.</p>
     </div>
   </div>
 </div>
@@ -1459,6 +1370,7 @@
   ];
 
   const siteStorageKey = 'lucht_site_data';
+  let isRemoteSyncInProgress = false;
 
   function getStoredAppData() {
     try {
@@ -1482,7 +1394,7 @@
     return safe;
   }
 
-  let appData = normalizeAppData(getStoredAppData());
+  let appData = normalizeAppData(null);
 
   function saveAppData() {
     localStorage.setItem(siteStorageKey, JSON.stringify(appData));
@@ -1501,6 +1413,93 @@
     document.documentElement.style.setProperty('--gold', color);
     document.documentElement.style.setProperty('--gold-light', palette.light);
     document.documentElement.style.setProperty('--gold-dim', palette.dim);
+  }
+
+  async function saveAppDataToFirestore() {
+    const siteRef = window.siteDataDocRef;
+    if (!siteRef) {
+      console.warn('Firebase Firestore başlatılmadı. siteDataDocRef bulunamadı.');
+      return false;
+    }
+
+    isRemoteSyncInProgress = true;
+    try {
+      await window.firebaseSetDoc(siteRef, {
+        ...appData,
+        updatedAt: new Date().toISOString()
+      }, { merge: true });
+      console.log('Firestore yazma başarılı:', appData.menuItems.length, 'menü öğesi');
+      return true;
+    } catch (error) {
+      console.error('Firestore veri yazma hatası:', error);
+      return false;
+    } finally {
+      isRemoteSyncInProgress = false;
+    }
+  }
+
+  async function loadRemoteAppData() {
+    const siteRef = window.siteDataDocRef;
+    if (!siteRef) return;
+
+    try {
+      const snapshot = await window.firebaseGetDoc(siteRef);
+
+      if (!snapshot.exists()) {
+        const localData = normalizeAppData(getStoredAppData());
+        appData = localData;
+        await saveAppDataToFirestore();
+        saveAppData();
+        renderPageData();
+        renderMenu();
+        renderAdminPanel();
+        return;
+      }
+
+      const remoteData = snapshot.data();
+      appData = normalizeAppData(remoteData);
+      saveAppData();
+      renderPageData();
+      renderMenu();
+      renderAdminPanel();
+    } catch (error) {
+      console.error('Firestore veri yükleme hatası:', error);
+      appData = normalizeAppData(getStoredAppData());
+      renderPageData();
+      renderMenu();
+      renderAdminPanel();
+    }
+  }
+
+  function subscribeToFirestoreData() {
+    const siteRef = window.siteDataDocRef;
+    if (!siteRef) {
+      console.warn('Firestore listener başlatılamadı: siteRef yok.');
+      return;
+    }
+
+    window.firebaseOnSnapshot(siteRef, (snapshot) => {
+      if (!snapshot.exists()) {
+        console.log('Firestore dokümanı yok; ilk kez oluşturuluyor.');
+        saveAppDataToFirestore();
+        return;
+      }
+
+      const remoteData = snapshot.data();
+      const nextData = normalizeAppData(remoteData);
+
+      if (JSON.stringify(nextData) === JSON.stringify(appData)) return;
+      if (isRemoteSyncInProgress) return;
+
+      appData = nextData;
+      saveAppData();
+      renderPageData();
+      renderMenu();
+      renderAdminPanel();
+      console.log('Firestore anlık güncelleme alındı.');
+    }, (error) => {
+      console.error('Firestore real-time listener hatası:', error);
+    });
   }
 
   function renderPageData() {
@@ -1586,15 +1585,9 @@
     const contactTripadvisor = appData.contact.tripadvisor || defaultSiteData.contact.tripadvisor;
     const socialText = appData.contact.socialText || 'Instagram · TripAdvisor';
     const socialLink = appData.contact.socialLink || contactInstagram;
-    if (privacyControllerName) {
-      privacyControllerName.textContent = appData.site.brandName || defaultSiteData.site.brandName;
-    }
-    if (privacyControllerAddress) {
-      privacyControllerAddress.innerHTML = appData.contact.address || defaultSiteData.contact.address;
-    }
-    if (privacyControllerPhone) {
-      privacyControllerPhone.textContent = contactPhone;
-    }
+    if (privacyControllerName) privacyControllerName.textContent = appData.site.brandName || defaultSiteData.site.brandName;
+    if (privacyControllerAddress) privacyControllerAddress.innerHTML = appData.contact.address || defaultSiteData.contact.address;
+    if (privacyControllerPhone) privacyControllerPhone.textContent = contactPhone;
     if (privacyContactEmail) {
       privacyContactEmail.textContent = contactEmail;
       privacyContactEmail.href = `mailto:${contactEmail}`;
@@ -2104,7 +2097,7 @@
     return { settings, menuItemsFromForm };
   }
 
-  function applyMenuChanges() {
+  async function applyMenuChanges() {
     const passwordField = document.getElementById('adminPasswordInput');
     if (passwordField && passwordField.value.trim()) {
       adminPassword = passwordField.value.trim();
@@ -2178,6 +2171,7 @@
     }));
 
     saveAppData();
+    await saveAppDataToFirestore();
     renderPageData();
     renderMenu();
     closeAdminPanel();
@@ -2195,7 +2189,7 @@
     renderAdminPanel();
   }
 
-  function resetData() {
+  async function resetData() {
     appData = {
       site: JSON.parse(JSON.stringify(defaultSiteData.site)),
       about: JSON.parse(JSON.stringify(defaultSiteData.about)),
@@ -2204,6 +2198,7 @@
       menuItems: JSON.parse(JSON.stringify(defaultMenuItems))
     };
     saveAppData();
+    await saveAppDataToFirestore();
     renderPageData();
     renderMenu();
     renderAdminPanel();
@@ -2248,6 +2243,16 @@
   document.getElementById('importDataInput').addEventListener('change', importAppDataFromJson);
 
   ensureAdminPassword();
+  function startRemoteDataSync() {
+    loadRemoteAppData();
+    subscribeToFirestoreData();
+  }
+
+  if (window.siteDataDocRef) {
+    startRemoteDataSync();
+  } else {
+    window.addEventListener('firebase-ready', startRemoteDataSync, { once: true });
+  }
   renderPageData();
   renderMenu();
   renderAdminPanel();
@@ -2403,7 +2408,10 @@
   }
 
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') closePrivacyModal();
+    if (event.key === 'Escape') {
+      closePrivacyModal();
+      closeReservationErrorModal();
+    }
   });
 
   /* Reservation */
